@@ -10,6 +10,7 @@ const BlogPopup = ({ isOpen, onClose }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
 
+
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
