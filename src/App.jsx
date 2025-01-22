@@ -29,7 +29,7 @@ function App() {
             <Route path="/Registrations" element={<RegistrationForm />} />
             <Route path="/Update-For-job" element={<JobBoard />} />
 
-            Update-For-job
+            
           </Routes>
         </div>
       </div>

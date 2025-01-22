@@ -4,6 +4,8 @@ import { Star, Quote } from 'lucide-react';
 const Testimonials = () => {
   const testimonials = [
     {
+
+
       id: 1,
       name: "Sarah Johnson",
       role: "Marketing Director",
