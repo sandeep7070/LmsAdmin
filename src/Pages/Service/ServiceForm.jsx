@@ -1,20 +1,28 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Settings } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
 const ServiceForm = () => {
     const [title,SetTitle] = useState('');
     const [description,SetDescription] = useState('');
-
+  const titleRef = useRef();
+  const descriptionRef = useRef();
     const handleSubmit = (e)=>{
         e.preventDefault();
         try {
-            if(!title || !description){
-                alert('Please fill in all fields');
+            if(!title.trim() ){
+                toast.info('Title is required...');
+                titleRef.current.focus();
+                return;
+                }
+            if(!description.trim() ){
+                toast.info('Description is required...');
+                descriptionRef.current.focus();
                 return;
                 }
 
                 console.log('Title : ',title , 'Description : ',description);
-                alert('Successfully created a new service')
+                toast('Successfully created a new service')
                 SetTitle('')
                 SetDescription('')
 
@@ -37,6 +45,7 @@ const ServiceForm = () => {
             <div className='mb-4'>
                 <label className='block my-2 text-lg font-semibold text-gray-700' htmlFor="title">Title</label>
                 <input type="text" 
+                ref={titleRef}
                 className='w-full p-3 rounded-md border-2 outline-none focus:border-yellow-400 border-gray-400' 
                 placeholder='Enter service title........'
                 value={title}
@@ -47,6 +56,7 @@ const ServiceForm = () => {
                 <label className='block my-2 text-lg font-semibold text-gray-600' htmlFor="description">Description</label>
                  <textarea   className='w-full p-3  rounded-md border-2 outline-none focus:border-yellow-400 border-gray-400'
                  placeholder='Enter service description........'
+                 ref={descriptionRef}
                  value={description}
                  onChange={(e)=>SetDescription(e.target.value)}
                  name="description" id="description" rows={1}  ></textarea>
