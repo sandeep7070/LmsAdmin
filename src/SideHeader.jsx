@@ -10,6 +10,7 @@ import { GrGallery } from "react-icons/gr";
 import { FaRegNoteSticky } from "react-icons/fa6";
 import { MdAppRegistration } from "react-icons/md";
 import { MdOutlineUpdate } from "react-icons/md";
+import { FaChalkboardTeacher } from "react-icons/fa";
 
 import { 
   ChevronRight, 
@@ -27,6 +28,8 @@ const navigationItems = [
   { id: '/Blog', name: 'Blog', icon: FaBlog  },
   { id: '/Testimonials', name: 'Testimonials', icon: FaRegNoteSticky },
   { id: '/Registrations', name: 'Registrations', icon: MdAppRegistration },
+  { id: '/Notice-Board', name: 'Notice Board', icon: FaChalkboardTeacher },
+
   { id: '/Enquiries', name: 'Enquiries', icon: SiCoursera },
   { id: '/Update-For-job', name: 'Update for job', icon: MdOutlineUpdate },
   { id: '/logout', name: 'logout', icon: IoMdLogOut },
