@@ -1,14 +1,31 @@
 import React, { useState } from 'react';
-import { ChevronUp, ChevronDown } from 'lucide-react';
+import { ChevronUp, ChevronDown, Users } from 'lucide-react';
 
-const SimpleTable = () => {
-  // Sample data
+
+const TeamTable = () => {
+  // Sample data with team members
   const initialData = [
-    { id: 1, name: "John Doe", email: "john@example.com", status: "Active", role: "Admin" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", status: "Inactive", role: "User" },
-    { id: 3, name: "Bob Johnson", email: "bob@example.com", status: "Active", role: "Editor" },
-    { id: 4, name: "Alice Brown", email: "alice@example.com", status: "Active", role: "User" },
-    { id: 5, name: "Charlie Wilson", email: "charlie@example.com", status: "Inactive", role: "User" },
+    { 
+      id: 1, 
+      name: "sandeep", 
+      designation: "Senior Developer",
+      experience: 8,
+      imageUrl: "/api/placeholder/50/50"
+    },
+    { 
+      id: 2, 
+      name: "vikash", 
+      designation: "Project Manager",
+      experience: 12,
+      imageUrl: "/api/placeholder/50/50"
+    },
+    { 
+      id: 3, 
+      name: "jass ", 
+      designation: "UX Designer",
+      experience: 5,
+      imageUrl: "/api/placeholder/50/50"
+    },
   ];
 
   const [data, setData] = useState(initialData);
@@ -37,84 +54,77 @@ const SimpleTable = () => {
   };
 
   return (
-    <div className="w-full bg-white shadow-sm rounded-lg overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th 
-                className="px-4 py-3 text-left cursor-pointer group border-b"
-                onClick={() => handleSort("id")}
-              >
-                <div className="flex items-center text-sm font-medium text-gray-700">
-                  ID
-                  <SortIcon field="id" />
-                </div>
-              </th>
-              <th 
-                className="px-4 py-3 text-left cursor-pointer group border-b"
-                onClick={() => handleSort("name")}
-              >
-                <div className="flex items-center text-sm font-medium text-gray-700">
-                  Name
-                  <SortIcon field="name" />
-                </div>
-              </th>
-              <th 
-                className="px-4 py-3 text-left cursor-pointer group border-b"
-                onClick={() => handleSort("email")}
-              >
-                <div className="flex items-center text-sm font-medium text-gray-700">
-                  Email
-                  <SortIcon field="email" />
-                </div>
-              </th>
-              <th 
-                className="px-4 py-3 text-left cursor-pointer group border-b"
-                onClick={() => handleSort("status")}
-              >
-                <div className="flex items-center text-sm font-medium text-gray-700">
-                  Status
-                  <SortIcon field="status" />
-                </div>
-              </th>
-              <th 
-                className="px-4 py-3 text-left cursor-pointer group border-b"
-                onClick={() => handleSort("role")}
-              >
-                <div className="flex items-center text-sm font-medium text-gray-700">
-                  Role
-                  <SortIcon field="role" />
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {data.map((item) => (
-              <tr 
-                key={item.id}
-                className="hover:bg-gray-50 transition-colors"
-              >
-                <td className="px-4 py-3 text-sm">{item.id}</td>
-                <td className="px-4 py-3 text-sm">{item.name}</td>
-                <td className="px-4 py-3 text-sm">{item.email}</td>
-                <td className="px-4 py-3 text-sm">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    item.status === "Active" 
-                      ? "bg-green-100 text-green-800" 
-                      : "bg-red-100 text-red-800"
-                  }`}>
-                    {item.status}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm">{item.role}</td>
+    <div className="w-full">
+      {/* Added Title Section */}
+      <div className="flex items-center gap-2 mb-6">
+        <Users className="w-8 h-8 ml-9 pt-1   text-yellow-400" />
+        <h2 className="text-3xl  pt-3  font-semibold text-black">Team Profiles</h2>
+      </div>
+
+
+      <div className="bg-gray-50 shadow-sm rounded-lg overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-4 py-3 text-left border-b">
+                  <div className="text-sm font-medium text-gray-700">
+                    Photo
+                  </div>
+                </th>
+                <th 
+                  className="px-4 py-3 text-left cursor-pointer group border-b"
+                  onClick={() => handleSort("name")}
+                >
+                  <div className="flex items-center text-sm font-medium text-black">
+                    Name
+                    <SortIcon field="name" />
+                  </div>
+                </th>
+                <th 
+                  className="px-4 py-3 text-left cursor-pointer group border-b"
+                  onClick={() => handleSort("designation")}
+                >
+                  <div className="flex items-center text-sm font-medium text-black">
+                    Designation
+                    <SortIcon field="designation" />
+                  </div>
+                </th>
+                <th 
+                  className="px-4 py-3 text-left cursor-pointer group border-b"
+                  onClick={() => handleSort("experience")}
+                >
+                  <div className="flex items-center text-sm font-medium text-black">
+                    Years of Experience
+                    <SortIcon field="experience" />
+                  </div>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {data.map((item) => (
+                <tr 
+                  key={item.id}
+                  className="hover:bg-slate-100 transition-colors"
+                >
+                  <td className="px-4 py-3">
+                    <img 
+                      src={item.imageUrl} 
+                      alt={`${item.name}'s photo`}
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                  </td>
+                  <td className="px-4 py-3 text-sm">{item.name}</td>
+                  <td className="px-4 py-3 text-sm">{item.designation}</td>
+                  <td className="px-4 py-3 text-sm">{item.experience} years</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
 };
 
-export default SimpleTable;
+export default TeamTable;
