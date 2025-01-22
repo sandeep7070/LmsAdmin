@@ -11,6 +11,7 @@ import Testimonials from './Pages/Testimonials/Testimoials';
 import RegistrationForm from './Pages/RegistrationsF/Registrations'
 import ServiceForm from './Pages/Service/ServiceForm'
 import UpdateJob from './Pages/Update-of-Job/UpdateJob'
+import NoticeBoad from './Pages/Notice-Boad/NoticeBoad'
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
             <Route path="/Blog" element={<StyledTable />} />
             <Route path="/Testimonials" element={<Testimonials />} />
             <Route path="/Registrations" element={<RegistrationForm />} />
-            <Route path="/Update-For-job" element={<UpdateJob />} />
+            <Route path='/Notice-Board' element={<NoticeBoad/>} /> 
+            <Route path="/Update-For-job" element={<UpdateJob />} />  
           </Routes>
         </div>
         <Toaster richColors position="top-center" />
