@@ -11,6 +11,7 @@ import Testimonials from './Components/Pages/Testimonials/Testimoials';
 import RegistrationForm from './Components/Pages/RegistrationsF/Registrations'
 import DashboardLayout from './Components/Pages/Update-of-Job/UpdateJob';
 import JobBoard from './Components/Pages/Update-of-Job/UpdateJob';
+import ServiceForm from './Components/Pages/Service/ServiceForm';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboadsh />} />
             <Route path="/Service" element={<ServiceTable />} />
+            <Route path="/Service/form" element={<ServiceForm />} />
             <Route path="/Team" element={<SimpleTable />} />
             <Route path="/About" element={<AboutCompany />} />
             <Route path="/Course" element={<CourseList />} />
