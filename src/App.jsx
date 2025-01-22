@@ -2,15 +2,16 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import SideLayout from './SideHeader';  
 import Dashboadsh from './Components/Dashboad/Dashboad';
-import ServiceTable from './Components/Pages/Service/ServiceTable';
-import SimpleTable from './Components/Pages/TeamP/TeamProtiles';
-import AboutCompany from './Components/Pages/AboutCompany/AboutCompany';
-import CourseList from './Components/Pages/Cource/Cource';
-import StyledTable from './Components/Pages/Blog/BlogAll';
-import Testimonials from './Components/Pages/Testimonials/Testimoials';
-import RegistrationForm from './Components/Pages/RegistrationsF/Registrations'
-import DashboardLayout from './Components/Pages/Update-of-Job/UpdateJob';
-import JobBoard from './Components/Pages/Update-of-Job/UpdateJob';
+// import ServiceTable from './Components/Pages/Service/ServiceTable';
+import ServiceTable from './Pages/Service/ServiceTable'
+// import SimpleTable from './Components/Pages/TeamP/TeamProtiles';
+import SimpleTable from './Pages/TeamP/TeamProtiles'
+import AboutCompany from './Pages/AboutCompany/AboutCompany';
+import CourseList from './Pages/Cource/Cource';
+import StyledTable from './Pages/Blog/BlogAll';
+import Testimonials from './Pages/Testimonials/Testimoials';
+import RegistrationForm from './Pages/RegistrationsF/Registrations'
+import JobBoard from './Pages/Update-of-Job/UpdateJob';
 
 function App() {
   return (
