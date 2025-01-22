@@ -11,7 +11,6 @@ import Testimonials from './Components/Pages/Testimonials/Testimoials';
 import RegistrationForm from './Components/Pages/RegistrationsF/Registrations'
 import DashboardLayout from './Components/Pages/Update-of-Job/UpdateJob';
 import JobBoard from './Components/Pages/Update-of-Job/UpdateJob';
-import ServiceForm from './Components/Pages/Service/ServiceForm';
 
 function App() {
   return (
