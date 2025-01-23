@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css';
+import { Toaster } from 'sonner';
 import SideLayout from './SideHeader';  
 import Dashboadsh from './Components/Dashboad/Dashboad';
 import ServiceTable from './Pages/Service/ServiceTable';
@@ -22,7 +22,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboadsh />} />
             <Route path="/Service" element={<ServiceTable />} />
-            <Route path="/Service/form" element={<ServiceForm />} />
+            <Route path='/Service/form' element={<ServiceForm />} />
             <Route path="/Team" element={<SimpleTable />} />
             <Route path="/About" element={<AboutCompany />} />
             <Route path="/Course" element={<CourseList />} />
@@ -31,9 +31,9 @@ function App() {
             <Route path="/Registrations" element={<RegistrationForm />} />
             <Route path='/Notice-Board' element={<NoticeBoad/>} /> 
             <Route path="/Update-For-job" element={<UpdateJob />} />  
-
           </Routes>
         </div>
+        <Toaster richColors position="top-center" />
       </div>
     </BrowserRouter>
   );
