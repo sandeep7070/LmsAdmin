@@ -5,13 +5,14 @@ import Dashboadsh from './Components/Dashboad/Dashboad';
 import ServiceTable from './Pages/Service/ServiceTable';
 import SimpleTable from './Pages/TeamP/TeamProtiles';
 import AboutCompany from './Pages/AboutCompany/AboutCompany';
-import CourseList from './Pages/Cource/Cource';
+import CourseList from './Pages/Course/Course';
 import StyledTable from './Pages/Blog/BlogAll';
 import Testimonials from './Pages/Testimonials/Testimoials';
 import RegistrationForm from './Pages/RegistrationsF/Registrations'
 import ServiceForm from './Pages/Service/ServiceForm'
 import UpdateJob from './Pages/Update-of-Job/UpdateJob'
 import NoticeBoad from './Pages/Notice-Boad/NoticeBoad'
+import CourseForm from './Pages/Course/CourseForm';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/Team" element={<SimpleTable />} />
             <Route path="/About" element={<AboutCompany />} />
             <Route path="/Course" element={<CourseList />} />
+            <Route path="/Course/form" element={<CourseForm />} />
             <Route path="/Blog" element={<StyledTable />} />
             <Route path="/Testimonials" element={<Testimonials />} />
             <Route path="/Registrations" element={<RegistrationForm />} />
