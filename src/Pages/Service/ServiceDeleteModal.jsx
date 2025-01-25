@@ -1,12 +1,34 @@
 import React from "react";
 import { toast } from "sonner";
+import { useDispatch,useSelector } from "react-redux";
+import { deleteService,fetchServices } from "../../Redux/Actions/serviceActions";
 
 const ServiceDeleteModal = ({isOpen,onClose,id}) => {
 
-    const handleDelete = ()=>{
-        toast.success(`Service with ${id} Deleted successfulyy.......`);
-        onClose();
-    }
+
+    const {status} = useSelector((state)=>state.services);
+    const dispatch = useDispatch();
+    const handleDelete = async () => {
+      try {
+        // Dispatch delete action and await result
+        const res = await dispatch(deleteService(id));
+    
+        // Check if the deletion was successful
+        if (res.type === "services/deleteService/fulfilled") {
+          toast.success(`Service with ${id} deleted successfully.`);
+          // Fetch the updated services list after deletion
+          dispatch(fetchServices());
+        } else {
+          toast.error(`Failed to delete service with ${id}.`);
+        }
+      } catch (error) {
+        toast.error(`Error: ${error.message || 'Something went wrong'}`);
+      }
+    
+      // Close modal after the action is complete
+      onClose();
+    };
+    
 
 
 
@@ -18,8 +40,10 @@ const ServiceDeleteModal = ({isOpen,onClose,id}) => {
         <div className="flex justify-center gap-6 mt-4">
           <button 
           onClick={handleDelete}
-          className="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors">
-            Yes, Delete
+          className="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors"
+          disabled = {status === "loading"}
+          >
+           {status === "loading" ? "Loading...." : "  Yes, Delete"} 
           </button>
           <button 
           onClick={onClose}

@@ -9,3 +9,5 @@ export const fetchCourses = createAsyncThunk(
     return data; // This will be the payload that gets passed to the reducer
   }
 );
+
+// 
