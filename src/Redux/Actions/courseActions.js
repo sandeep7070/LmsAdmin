@@ -1,13 +1,75 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-// This is the async action to fetch course data
+// Fetch Course Data
 export const fetchCourses = createAsyncThunk(
-  'courses/fetchCourses', // action type
+  "courses/fetchCourses",
   async () => {
-    const response = await fetch('https://fakestoreapi.com/products/');
+    const response = await fetch(
+      "https://amsbackendlive.onrender.com/api/v1/course/getAllCourse"
+    );
     const data = await response.json();
-    return data; // This will be the payload that gets passed to the reducer
+    return data.courses;
   }
 );
 
-// 
+// Add Course Data
+export const addCourse = createAsyncThunk(
+  "courses/addCourse",
+  async (courseData, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        "https://amsbackendlive.onrender.com/api/v1/course/Create",
+        {
+          method: "POST",
+          body: courseData,
+        }
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        return rejectWithValue(data);
+      }
+      return data;
+    } catch (error) {
+      return rejectWithValue({ message: error.message });
+    }
+  }
+);
+
+// Delete a Course
+export const deleteCourse = createAsyncThunk(
+  "courses/deleteCourse",
+  async (courseId, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`https://amsbackendlive.onrender.com/api/v1/course/deleteCourse/${courseId}`,{
+        method: "DELETE",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        return rejectWithValue(data.message);
+      }
+      return data;
+    } catch (error) {
+      return rejectWithValue({ message: error.message });
+    }
+  }
+);
+
+// Update a course 
+
+export const updateCourse = createAsyncThunk(
+  "courses/updateCourse",
+  async (courseId,courseData, { rejectWithValue }) => {
+    try {
+        const res = await fetch(`https://amsbackendlive.onrender.com/api/v1/course/updateCourse/${courseId}`,{
+          method: "PUT",
+          body: courseData,
+        });
+        const data = await res.json();
+        if (!response.ok) {
+          return rejectWithValue(data.message);
+        }
+        return data;
+    } catch (error) {
+      return rejectWithValue({ message: error.message });
+    }
+  })

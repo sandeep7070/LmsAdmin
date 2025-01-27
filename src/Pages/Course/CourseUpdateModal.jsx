@@ -1,30 +1,29 @@
 import React, { useState } from "react";
-import { ImageUp, SquareCheckBig, NotebookText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { ImageUp, SquareCheckBig } from "lucide-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { addCourse } from "../../Redux/Actions/courseActions";
 import { useDispatch } from "react-redux";
+import { updateCourse } from "../../Redux/Actions/courseActions";
+import { toast } from "sonner";
 
-const CourseForm = () => {
+const CourseUpdateModal = ({ course, onClose }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState({
-    title: "",
-    code: "",
-    subjects: "",
-    duration: "",
-    fees: "",
-    discountedFees: "",
-    minimumFees: "",
-    curriculum: "",
-    eligibility: "",
+    title: course.title || "",
+    code: course.courseCode || "",
+    subjects: course.subject || "",
+    duration: course.duration || "",
+    fees: course.courseFees || "",
+    discountedFees: course.discountendfees || "",
+    minimumFees: course.minFeesToPay || "",
+    curriculum: course.curriculum || "",
+    eligibility: course.eligibilityCriteria || "",
     images: null,
-    domain: "",
+    domain: course.domain || "",
   });
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(course.imageName || null);
 
-  // Handle standard input changes
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === "file") {
@@ -40,7 +39,7 @@ const CourseForm = () => {
     setData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Form submission handler
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -69,10 +68,9 @@ const CourseForm = () => {
       !minimumFees ||
       !curriculum ||
       !eligibility ||
-      !domain ||
-      !images
+      !domain
     ) {
-      toast.error("Please fill in all fields before submitting.");
+      toast.error("Please fill in all fields before updating.");
       return;
     }
 
@@ -87,59 +85,27 @@ const CourseForm = () => {
     formData.append("curriculum", curriculum);
     formData.append("eligibilityCriteria", eligibility);
     formData.append("domain", domain);
-    formData.append("coverImage", images);
+    if (images) formData.append("coverImage", images);
 
-    const result = await dispatch(addCourse(formData));
-    if (result.type === "courses/addCourse/fulfilled") {
-      toast.success(result.payload.message || "Course added successfully");
-      // Clear the form
-      setData({
-        title: "",
-        code: "",
-        subjects: "",
-        duration: "",
-        fees: "",
-        discountedFees: "",
-        minimumFees: "",
-        curriculum: "",
-        eligibility: "",
-        images: null,
-        domain: "",
-      });
-      setImage(null);
-    } else if (result.type === "courses/addCourse/rejected") {
-      toast.error(result.payload.message || "Failed to add course");
+    const result = await dispatch(updateCourse(course._id, formData));
+    console.log(result)
+    if (result.type === "courses/updateCourse/fulfilled") {
+      toast.success(result.payload?.message || "Course updated successfully");
+      onClose();
+    } else if (result.type === "courses/updateCourse/rejected") {
+      toast.error(result.payload?.message || "Failed to update course");
     }
   };
 
   return (
-    <div className="w-full min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="w-full max-w-4xl p-6 bg-white shadow-lg rounded-lg">
-        <div className="flex flex-row items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold flex items-center">
-            <NotebookText className="w-6 h-6 mr-2 text-yellow-600" />
-            Courses
-          </h2>
-          <Link
-            to="/Course"
-            className="text-center px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-500 text-white"
-          >
-            Go Back
-          </Link>
-        </div>
+        <h2 className="text-2xl font-semibold mb-4">Update Course</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <h1 className="text-2xl font-semibold text-center mb-4">
-            Add New Course
-          </h1>
-          <hr className="w-1/2 mx-auto border border-yellow-400 mb-4" />
-
           {/* Title and Code */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label
-                className="text-lg font-semibold text-gray-700 mb-1"
-                htmlFor="title"
-              >
+              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="title">
                 Title
               </label>
               <input
@@ -153,10 +119,7 @@ const CourseForm = () => {
               />
             </div>
             <div className="flex flex-col">
-              <label
-                className="text-lg font-semibold text-gray-700 mb-1"
-                htmlFor="code"
-              >
+              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="code">
                 Course Code
               </label>
               <input
@@ -174,10 +137,7 @@ const CourseForm = () => {
           {/* Subjects and Duration */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label
-                className="text-lg font-semibold text-gray-700 mb-1"
-                htmlFor="subjects"
-              >
+              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="subjects">
                 Subjects
               </label>
               <input
@@ -191,10 +151,7 @@ const CourseForm = () => {
               />
             </div>
             <div className="flex flex-col">
-              <label
-                className="text-lg font-semibold text-gray-700 mb-1"
-                htmlFor="duration"
-              >
+              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="duration">
                 Duration
               </label>
               <select
@@ -218,10 +175,7 @@ const CourseForm = () => {
           {/* Fees and Discounted Fees */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label
-                className="text-lg font-semibold text-gray-700 mb-1"
-                htmlFor="fees"
-              >
+              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="fees">
                 Course Fees
               </label>
               <input
@@ -235,10 +189,7 @@ const CourseForm = () => {
               />
             </div>
             <div className="flex flex-col">
-              <label
-                className="text-lg font-semibold text-gray-700 mb-1"
-                htmlFor="discountedFees"
-              >
+              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="discountedFees">
                 Discounted Fees
               </label>
               <input
@@ -256,10 +207,7 @@ const CourseForm = () => {
           {/* Minimum Fees and Images */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label
-                className="text-lg font-semibold text-gray-700 mb-1"
-                htmlFor="minimumFees"
-              >
+              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="minimumFees">
                 Minimum Fees to Pay
               </label>
               <input
@@ -308,10 +256,7 @@ const CourseForm = () => {
 
           {/* Domain Selection */}
           <div className="flex flex-col">
-            <label
-              className="text-lg font-semibold text-gray-700 mb-1"
-              htmlFor="domain"
-            >
+            <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="domain">
               Domain
             </label>
             <select
@@ -335,10 +280,7 @@ const CourseForm = () => {
           {/* Curriculum and Eligibility */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label
-                className="text-lg font-semibold text-gray-700 mb-1"
-                htmlFor="curriculum"
-              >
+              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="curriculum">
                 Curriculum
               </label>
               <ReactQuill
@@ -348,10 +290,7 @@ const CourseForm = () => {
               />
             </div>
             <div className="flex flex-col">
-              <label
-                className="text-lg font-semibold text-gray-700 mb-1"
-                htmlFor="eligibility"
-              >
+              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="eligibility">
                 Eligibility Criteria
               </label>
               <ReactQuill
@@ -362,13 +301,20 @@ const CourseForm = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
-          <div className="flex justify-center items-end p-4 ">
+          {/* Submit and Close Buttons */}
+          <div className="flex justify-end  pt-12 gap-4">
+            <button
+              type="button"
+              className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-md"
+              onClick={onClose}
+            >
+              Cancel
+            </button>
             <button
               type="submit"
-              className="w-36 my-4 p-3 hover:bg-yellow-500 bg-yellow-400 text-white rounded-md text-center"
+              className="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-white rounded-md"
             >
-              Add
+              Update
             </button>
           </div>
         </form>
@@ -377,4 +323,4 @@ const CourseForm = () => {
   );
 };
 
-export default CourseForm;
+export default CourseUpdateModal;
