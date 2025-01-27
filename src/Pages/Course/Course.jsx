@@ -1,50 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Eye, Pencil, Trash2, Settings } from "lucide-react";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useDispatch,useSelector } from 'react-redux';
+import { fetchCourses } from '../../Redux/Actions/courseActions';
 
 const CourseList = () => {
-  const courses = [
-    {
-      id: 1,
-      title: "Complete Web Development",
-      description: "Learn full-stack web development from scratch with HTML, CSS, JavaScript, React, and Node.js",
-      duration: "12 weeks",
-      students: 1500,
-      lessons: 24,
-      rating: 4.8,
-      level: "Beginner",
-      instructor: "John Smith",
-      price: 99.99,
-      image: "/api/placeholder/400/250"
-    },
-    {
-      id: 2,
-      title: "Advanced React & Redux",
-      description: "Master React 18, Redux Toolkit, and modern frontend development practices",
-      duration: "8 weeks",
-      students: 1200,
-      lessons: 18,
-      rating: 4.9,
-      level: "Advanced",
-      instructor: "Sarah Johnson",
-      price: 89.99,
-      image: "/api/placeholder/400/250"
-    },
-    {
-      id: 3,
-      title: "UI/UX Design Fundamentals",
-      description: "Learn design principles, user research, wireframing, and prototyping",
-      duration: "10 weeks",
-      students: 800,
-      lessons: 20,
-      rating: 4.7,
-      level: "Intermediate",
-      instructor: "Mike Wilson",
-      price: 79.99,
-      image: "/api/placeholder/400/250"
-    }
-  ];
+
+   const dispatch = useDispatch();
+   const {courses,status,error} = useSelector((state) => state.courses);
+   console.log(courses)
+
+    useEffect(()=>{
+      dispatch(fetchCourses());
+    },[])
+
 
   // Handle actions for View, Edit, and Delete
   const handleView = (id) => {
