@@ -14,10 +14,9 @@ import {
     UPDATE_TEAMMEMBER_REQUEST,
     UPDATE_TEAMMEMBER_SUCCESS,
     UPDATE_TEAMMEMBER_FAILURE
-} from '../Constants/TeamMember.js';
+} from '../Constants/TeamMembers.js';
 
 const initialState = {
-  teams: [],
   teamMembers: [],
   selectedTeamMember: null,
   loading: false,

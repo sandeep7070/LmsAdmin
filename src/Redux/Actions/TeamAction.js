@@ -15,7 +15,7 @@ import {
   UPDATE_TEAMMEMBER_REQUEST,
   UPDATE_TEAMMEMBER_SUCCESS,
   UPDATE_TEAMMEMBER_FAILURE
-} from '../Constants/TeamMember.js';
+} from '../Constants/TeamMembers.js';
 
  const createTeam = (teamData) => async (dispatch) => {
   try {

@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllTeamMembers } from '../../Redux/Actions/TeamMembers.js';
+import { getAllTeamMembers } from '../../Redux/Actions/TeamAction.js'
 import { ChevronUp, ChevronDown, Users } from 'lucide-react';
 
 function TeamMemberList() {
   const dispatch = useDispatch();
-  const { teamMembers, loading, error } = useSelector(state => state.team);
+  // Add default empty array and null for error to prevent destructuring error
+  const { teamMembers = [], loading = false, error = null } = useSelector(state => state.team || {});
   const [data, setData] = useState([]);
   const [sortField, setSortField] = useState("");
   const [sortDirection, setSortDirection] = useState("asc");
-
 
   useEffect(() => {
     dispatch(getAllTeamMembers());
   }, [dispatch]);
 
-
-
   useEffect(() => {
-
-    console.log("Total team members:", teamMembers.length);
-    
     if (teamMembers.length > 0) {
+      console.log("Total team members:", teamMembers.length);
       console.log("Detailed Team Members Data:", 
         teamMembers.map(member => ({
           id: member.id,
@@ -49,7 +45,6 @@ function TeamMemberList() {
     setData(sortedData);
   };
 
-  // Sort icon component
   const SortIcon = ({ field }) => {
     if (sortField !== field) return <ChevronUp className="w-4 h-4 opacity-0 group-hover:opacity-50" />;
     return sortDirection === "asc" ? 
@@ -57,9 +52,25 @@ function TeamMemberList() {
       <ChevronDown className="w-4 h-4" />;
   };
 
-  // Loading and error states
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  // Improved loading and error handling
+  if (loading) return (
+    <div className="flex items-center justify-center h-full">
+      <div className="text-lg text-gray-600">Loading team members...</div>
+    </div>
+  );
+
+  if (error) return (
+    <div className="flex items-center justify-center h-full">
+      <div className="text-lg text-red-600">Error: {error.toString()}</div>
+    </div>
+  );
+
+  // Render empty state if no team members
+  if (data.length === 0) return (
+    <div className="flex items-center justify-center h-full">
+      <div className="text-lg text-gray-600">No team members found</div>
+    </div>
+  );
 
   return (
     <div className="w-full">
