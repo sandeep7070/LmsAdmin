@@ -8,6 +8,7 @@ import AboutCompany from './Pages/AboutCompany/AboutCompany';
 import CourseList from './Pages/Course/Course';
 import StyledTable from './Pages/Blog/BlogAll';
 import Testimonials from './Pages/Testimonials/Testimoials';
+import TestimonialForm from './Pages/Testimonials/TestimonialsForm';
 import RegistrationForm from './Pages/RegistrationsF/Registrations'
 import ServiceForm from './Pages/Service/ServiceForm'
 import UpdateJob from './Pages/Update-of-Job/UpdateJob'
@@ -30,6 +31,7 @@ function App() {
             <Route path="/Course/form" element={<CourseForm />} />
             <Route path="/Blog" element={<StyledTable />} />
             <Route path="/Testimonials" element={<Testimonials />} />
+            <Route path="/Testimonials/form" element={<TestimonialForm />} />
             <Route path="/Registrations" element={<RegistrationForm />} />
             <Route path='/Notice-Board' element={<NoticeBoad/>} /> 
             <Route path="/Update-For-job" element={<UpdateJob />} />  
