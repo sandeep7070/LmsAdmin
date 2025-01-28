@@ -63,11 +63,10 @@ const coursesSlice = createSlice({
       })
       .addCase(updateCourse.fulfilled, (state, action) => {
         state.status = "succeeded";
-        const courseIndex = state.courses.findIndex(
-          (course) => course.id === action.payload.id
-        );
-        if (courseIndex > -1) {
-          state.courses[courseIndex] = action.payload.course;
+        const updatedCourse = action.payload.course;
+        const index = state.courses.findIndex((course) => course._id === updatedCourse._id);
+        if (index !== -1) {
+          state.courses[index] = updatedCourse;
         }
       })
       .addCase(updateCourse.rejected, (state, action) => {

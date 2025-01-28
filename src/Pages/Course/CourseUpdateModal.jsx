@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { ImageUp, SquareCheckBig } from "lucide-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCourse } from "../../Redux/Actions/courseActions";
 import { toast } from "sonner";
-
+import Spinner from "../../Components/Spinner/Spinner";
 const CourseUpdateModal = ({ course, onClose }) => {
   const dispatch = useDispatch();
+  const {status} = useSelector((state)=>state.courses)
   const [data, setData] = useState({
     title: course.title || "",
     code: course.courseCode || "",
@@ -87,8 +88,8 @@ const CourseUpdateModal = ({ course, onClose }) => {
     formData.append("domain", domain);
     if (images) formData.append("coverImage", images);
 
-    const result = await dispatch(updateCourse(course._id, formData));
-    console.log(result)
+    const result = await dispatch(updateCourse({ courseId: course._id, formData }));
+   console.log(result)
     if (result.type === "courses/updateCourse/fulfilled") {
       toast.success(result.payload?.message || "Course updated successfully");
       onClose();
@@ -99,6 +100,7 @@ const CourseUpdateModal = ({ course, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      {status === "loading" && <Spinner/>}
       <div className="w-full max-w-4xl p-6 bg-white shadow-lg rounded-lg">
         <h2 className="text-2xl font-semibold mb-4">Update Course</h2>
         <form onSubmit={handleSubmit} className="space-y-4">

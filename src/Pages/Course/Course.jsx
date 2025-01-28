@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCourses } from "../../Redux/Actions/courseActions";
 import CourseDeleteModal from "./CourseDeleteModal";
 import CourseUpdateModal from "./CourseUpdateModal";
+import Spinner from "../../Components/Spinner/Spinner";
+
 const CourseList = () => {
   const dispatch = useDispatch();
 
-  const courses = useSelector((state) => state.courses.courses);
+  const {courses,status} = useSelector((state) => state.courses);
 
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -36,6 +38,7 @@ const CourseList = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen py-12">
+      {status === "loading" && <Spinner />}
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Courses</h1>
@@ -120,9 +123,9 @@ const CourseList = () => {
           <CourseDeleteModal
             isOpen={isDeleteModalOpen}
             onClose={() => setIsDeleteModalOpen(false)}
-            id={selectedCoursennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn}
-          />nnnnnnnnnnnn
-        </div>n +n n n n n n n 
+            id={selectedCourse}
+          />
+        </div>
       </div>
     </div>
   );

@@ -56,20 +56,28 @@ export const deleteCourse = createAsyncThunk(
 
 // Update a course 
 
+
 export const updateCourse = createAsyncThunk(
   "courses/updateCourse",
-  async (courseId,courseData, { rejectWithValue }) => {
+  async ({ courseId, formData }, { rejectWithValue }) => {
     try {
-        const res = await fetch(`https://amsbackendlive.onrender.com/api/v1/course/updateCourse/${courseId}`,{
+      
+      const response = await fetch(
+        `https://amsbackendlive.onrender.com/api/v1/course/updateCourse/${courseId}`,
+        {
           method: "PUT",
-          body: courseData,
-        });
-        const data = await res.json();
-        if (!response.ok) {
-          return rejectWithValue(data.message);
+          body: formData,
         }
-        return data;
+      );
+      const data = await response.json();
+
+      if (!response.ok) {
+        return rejectWithValue(data);
+      }
+      return data; 
     } catch (error) {
+      console.error("Error in updateCourse action:", error);
       return rejectWithValue({ message: error.message });
     }
-  })
+  }
+);
