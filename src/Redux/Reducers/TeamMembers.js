@@ -17,38 +17,61 @@ import {
 } from '../Constants/TeamMembers.js';
 
 const initialState = {
-  teamMembers: [],
+  teams: [],
+  members: [],
   selectedTeamMember: null,
   loading: false,
-  error: null
+  error: null,
+  currentTeam: null
+
 };
 
 export const teamReducer = (state = initialState, action) => {
   switch (action.type) {
     // Create Team
     case CREATE_TEAM_REQUEST:
-      return { ...state, loading: true };
-    case CREATE_TEAM_SUCCESS:
-      return { 
-        ...state, 
-        loading: false, 
-        teams: [...state.teams, action.payload] 
+      return {
+        ...state,
+        loading: true,
+        error: null
       };
-    case CREATE_TEAM_FAILURE:
-      return { ...state, loading: false, error: action.payload };
 
+      case CREATE_TEAM_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          teams: [...state.teams, action.payload],
+          error: null
+        };
+
+      case CREATE_TEAM_FAILURE:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload
+        };
     // Get All Team Members
     case GET_ALLTEAMMEMBERS_REQUEST:
-      return { ...state, loading: true };
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+
     case GET_ALLTEAMMEMBERS_SUCCESS:
       return { 
         ...state, 
         loading: false, 
-        teamMembers: action.payload 
+        teamMembers: action.payload ,
+        error: null
       };
-    case GET_ALLTEAMMEMBERS_FAILURE:
-      return { ...state, loading: false, error: action.payload };
-
+      
+      case GET_ALLTEAMMEMBERS_FAILURE:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload
+        };
     // Get Team Member By ID
     case GET_TEAMMEMBERBYID_REQUEST:
       return { ...state, loading: true };
@@ -91,3 +114,4 @@ export const teamReducer = (state = initialState, action) => {
       return state;
   }
 };
+

@@ -70,7 +70,7 @@ const SideLayout = () => {
 
       <button 
         onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-        className="absolute -right-3 top-3 bg-[#edba12] rounded-full p-2.5 shadow-lg hover:bg-[#edba12] transition-colors"
+        className="absolute -right-3 top-3  bg-gradient-to-r  from-[#edba12] to-yellow-700 rounded-full p-2.5 shadow-lg hover:bg-[#edba12] transition-colors"
         aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
       >
         {isSidebarCollapsed ? 
@@ -90,8 +90,8 @@ const SideLayout = () => {
                   transition-all duration-200
                   rounded-s-lg
                   ${location.pathname === item.id 
-                    ? 'text-black bg-[#edba12] shadow-md' 
-                    : 'text-black hover:bg-[#edba12] hover:text-black hover:shadow-md'}
+                    ? 'text-black bg-gradient-to-r  from-[#edba12] to-yellow-600 shadow-md' 
+                    : 'text-black hover:bg-[#edba12d0] hover:text-black hover:shadow-md'}
                   ${isSidebarCollapsed ? 'justify-center' : 'justify-start'}
                 `}
               >    

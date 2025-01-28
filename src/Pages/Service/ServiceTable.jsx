@@ -9,7 +9,6 @@ import { fetchServices } from "../../Redux/Actions/serviceActions";
 
 const ServiceTable = () => {
   const dispatch = useDispatch();
-
   // Fetching services from the Redux store
   const services = useSelector((state) => state.services.services);
 

@@ -29,7 +29,7 @@ const salesData = [
 
 const AdminDashboard = () => {
   return (
-    <div className="min-h-screen bg-gray-200">
+    <div className="min-h-screen bg-gray-100">
       {/* Top Navigation */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 ">
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <div className="bg-whit rounded-lg shadow p-6 bg-[#edba12]">
+          <div className="bg-whit rounded-lg shadow p-6 bg-gradient-to-r  from-[#edba12] to-yellow-600">
             <div className="flex items-center">
               <div className="p-3 rounded-full">
                 <RiTeamLine className="w-8 h-11 text-gray-200" />
@@ -78,7 +78,7 @@ const AdminDashboard = () => {
             </div>
           </div>
           
-          <div className="rounded-lg shadow p-6 bg-[#edba12]">
+          <div className="rounded-lg shadow p-6 bg-gradient-to-r  from-[#edba12] to-yellow-600">
             <div className="flex items-center">
               <div className="p-3 rounded-full">
                 <SiCoursera className="w-8 h-11 text-gray-200" />
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div className="rounded-lg shadow p-6 bg-[#edba12]">
+          <div className="rounded-lg shadow p-6 bg-gradient-to-r  from-[#edba12] to-yellow-600">
             <div className="flex items-center">
               <div className="p-3 rounded-full">
                 <FaBlog className="w-8 h-11 text-gray-200" />
@@ -102,7 +102,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-[#edba12] rounded-lg shadow p-6">
+          <div className="bg-gradient-to-r  from-[#edba12] to-yellow-600 rounded-lg shadow p-6">
             <div className="flex items-center">
               <div className="p-3 rounded-full">
                 <GrUpdate className="w-6 h-11 text-white" />
@@ -118,7 +118,7 @@ const AdminDashboard = () => {
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Sales Chart */}
-          <div className="bg-gray-100 rounded-lg shadow p-6">
+          <div className="bg-gray-50 rounded-lg shadow p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-black">Course Sale Overview</h2>
               <select className="border rounded-md px-3 py-1">
@@ -148,7 +148,7 @@ const AdminDashboard = () => {
           </div>
 
           {/* Recent Activity */}
-          <div className="bg-gray-100 rounded-lg shadow p-6">
+          <div className="bg-gray-50 rounded-lg shadow p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h2>
             <div className="space-y-4">
               {[1, 2, 3, 4].map((item) => (
@@ -172,7 +172,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Recent Orders Table */}
-        <div className="bg-gray-100 rounded-lg shadow">
+        <div className="bg-gray-50 rounded-lg shadow">
           <div className="p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Recent Orders</h2>
             <div className="overflow-x-auto">
