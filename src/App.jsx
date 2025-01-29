@@ -14,6 +14,8 @@ import ServiceForm from './Pages/Service/ServiceForm'
 import UpdateJob from './Pages/Update-of-Job/UpdateJob'
 import NoticeBoad from './Pages/Notice-Boad/NoticeBoad'
 import CourseForm from './Pages/Course/CourseForm';
+import Expense from './Pages/Expense/Expense';
+import ExpenseForm from './Pages/Expense/ExpenseForm';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
             <Route path="/About" element={<AboutCompany />} />
             <Route path="/Course" element={<CourseList />} />
             <Route path="/Course/form" element={<CourseForm />} />
+            <Route path = "/Expense" element={<Expense/>} />
+            <Route path = "/Expense/form" element={<ExpenseForm/>} />
             <Route path="/Blog" element={<StyledTable />} />
             <Route path="/Testimonials" element={<Testimonials />} />
             <Route path="/Testimonials/form" element={<TestimonialForm />} />

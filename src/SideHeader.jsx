@@ -16,14 +16,17 @@ import {
   ChevronRight, 
   ChevronLeft,
   LayoutDashboard,
+  HandCoins
+  
 } from 'lucide-react';
 
 const navigationItems = [
   { id: '/', name: 'Dashboard', icon: LayoutDashboard },
   { id: '/Service', name: 'Service', icon: MdMiscellaneousServices  },  
-  { id: '/Team', name: 'Team(Protiles)', icon: AiOutlineTeam  },
+  { id: '/Team', name: 'Team(Profiles)', icon: AiOutlineTeam  },
   { id: '/About', name: 'About Company', icon: FcAbout  },
   { id: '/Course', name: 'Course', icon: SiCoursera },
+  { id: '/expense', name: 'Expense', icon: HandCoins },
   { id: '/Gallery', name: 'Gallery', icon: GrGallery },
   { id: '/Blog', name: 'Blog', icon: FaBlog  },
   { id: '/Testimonials', name: 'Testimonials', icon: FaRegNoteSticky },
