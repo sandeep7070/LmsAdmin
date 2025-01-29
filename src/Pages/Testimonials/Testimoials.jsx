@@ -1,25 +1,31 @@
-import React, { useEffect } from 'react';
-import { Star, Quote } from 'lucide-react';
-import { Link  } from 'react-router-dom';
-import { useDispatch,useSelector } from 'react-redux';
-import { fetchTestimonials } from '../../Redux/Actions/testimonialAction';
-import Spinner from '../../Components/Spinner/Spinner'
+import React, { useEffect, useState } from "react";
+import { Star, Quote } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTestimonials } from "../../Redux/Actions/testimonialAction";
+import Spinner from "../../Components/Spinner/Spinner";
+import TestimonialDeleteModal from "./TestimonialDeleteModal";
+import {Trash2} from 'lucide-react'
 
 const Testimonials = () => {
-
   const dispatch = useDispatch();
-  const {testimonials,status} = useSelector((state)=>state.testimonials);
- 
-   useEffect(()=>{
-         dispatch(fetchTestimonials())
-   },[dispatch])
+  const { testimonials, status } = useSelector((state) => state.testimonials);
+  const [isOpenDleteMOdal, setIsOpenDeleteModal] = useState(false);
+  const [testimonialId, setTestimonialId] = useState(null);
 
 
+  useEffect(() => {
+    dispatch(fetchTestimonials());
+  }, []);
 
+  // Handle Delete 
+  const handleDelete = (id) => {
+    setTestimonialId(id);
+    setIsOpenDeleteModal(true);
+  };
 
   // const testimonials = [
   //   {
-
 
   //     id: 1,
   //     name: "Sarah Johnson",
@@ -64,13 +70,17 @@ const Testimonials = () => {
 
   return (
     <div className="py-12 bg-gray-50">
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-black mb-4">
             What Our Clients Say
           </h2>
-         <Link to='/Testimonials/form' className='px-5 py-4 rounded-full float-right bg-yellow-400 text-white font-semibold hover:bg-yellow-500'>Add New Testimonial </Link>
+          <Link
+            to="/Testimonials/form"
+            className="px-5 py-4 rounded-full float-right bg-yellow-400 text-white font-semibold hover:bg-yellow-500"
+          >
+            Add New Testimonial{" "}
+          </Link>
           <p className="text-lg text-black max-w-2xl mx-auto">
             Don't just take our word for it
           </p>
@@ -82,7 +92,7 @@ const Testimonials = () => {
               className="bg-[#edba121a] rounded-xl shadow-md p-8 relative hover:shadow-lg transition-shadow duration-300"
             >
               <Quote className="absolute top-6 right-6 w-8 h-8 text-black" />
-              
+
               <div className="flex items-center mb-6">
                 <img
                   src={testimonial.image}
@@ -90,7 +100,9 @@ const Testimonials = () => {
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div className="ml-4">
-                  <h3 className="font-semibold text-black">{testimonial.name}</h3>
+                  <h3 className="font-semibold text-black">
+                    {testimonial.name}
+                  </h3>
                   <p className="text-sm text-black">{testimonial.role}</p>
                 </div>
               </div>
@@ -99,12 +111,18 @@ const Testimonials = () => {
 
               <p className="mt-4 text-black leading-relaxed">
                 {testimonial.description}
+              <Trash2 className="cursor-pointer text-red-500 float-right hover:text-red-400" onClick={()=>handleDelete(testimonial._id)}/>
               </p>
             </div>
           ))}
         </div>
       </div>
-      {status === "loading" && <Spinner/>}
+      {status === "loading" && <Spinner />}
+      <TestimonialDeleteModal
+       isOpen = {isOpenDleteMOdal}
+       onClose = {()=>setIsOpenDeleteModal(false)}
+       id={testimonialId}
+       />
     </div>
   );
 };
