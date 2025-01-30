@@ -7,7 +7,7 @@ const testimonialSlice = createSlice({
         testimonials: [],
         status : "idle",
         error: null
-        },
+        },       
         reducers: {},
         extraReducers: (builder) => {
             builder 
@@ -23,7 +23,7 @@ const testimonialSlice = createSlice({
                     state.error = action.payload?.message || "Error fetching testimonials"
                    })
 
-                //    Handle Add Testimonials
+                     //    Handle Add Testimonials
                    .addCase(addTestimonials.pending,(state)=>{
                        state.status = 'loading'
                    })
@@ -36,5 +36,5 @@ const testimonialSlice = createSlice({
                     state.error = action.payload?.message || "Error adding testimonials"
                     })
         }
-})
+})        
 export default testimonialSlice.reducer;

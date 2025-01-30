@@ -11,6 +11,8 @@ import { FaRegNoteSticky } from "react-icons/fa6";
 import { MdAppRegistration } from "react-icons/md";
 import { MdOutlineUpdate } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
+
 
 import { 
   ChevronRight, 
@@ -20,12 +22,13 @@ import {
 
 const navigationItems = [
   { id: '/', name: 'Dashboard', icon: LayoutDashboard },
-  { id: '/Service', name: 'Service', icon: MdMiscellaneousServices  },  
+  { id: '/StaffManeger', name: 'Staff Manager Dashboard', icon: RiAdminFill },
+  { id: '/Service', name: 'Service Management', icon: MdMiscellaneousServices  },  
   { id: '/Team', name: 'Team(Protiles)', icon: AiOutlineTeam  },
   { id: '/About', name: 'About Company', icon: FcAbout  },
   { id: '/Course', name: 'Course', icon: SiCoursera },
   { id: '/Gallery', name: 'Gallery', icon: GrGallery },
-  { id: '/Blog', name: 'Blog', icon: FaBlog  },
+  { id: '/Blog', name: 'Content Blog ', icon: FaBlog  },
   { id: '/Testimonials', name: 'Testimonials', icon: FaRegNoteSticky },
   { id: '/Registrations', name: 'Registrations', icon: MdAppRegistration },
   { id: '/Notice-Board', name: 'Notice Board', icon: FaChalkboardTeacher },

@@ -1,4 +1,3 @@
-// src/Redux/Selectors/teamSelectors.js
 import { createSelector } from '@reduxjs/toolkit';
 
 // Base selector

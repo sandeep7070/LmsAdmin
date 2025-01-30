@@ -40,14 +40,6 @@ function TeamMemberList() {
     setDeletePopupOpen(true);
   }, []);
 
-  // const handleSort = useCallback((field) => {
-  //   setSortField(field);
-  //   setSortDirection(currentDirection => 
-  //     field === sortField && currentDirection === "asc" ? "desc" : "asc"
-  //   );
-  // }, [sortField]);
-
-
   const handleCancelDelete = useCallback(() => {
     setDeletePopupOpen(false);
     setMemberToDelete(null);

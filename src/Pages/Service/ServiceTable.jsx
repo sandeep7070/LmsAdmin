@@ -41,7 +41,7 @@ const ServiceTable = () => {
       <div className="flex flex-row items-center justify-between p-6">
         <h2 className="text-2xl font-semibold flex items-center">
           <Settings className="w-6 h-6 mr-2 ml-4 text-yellow-600" />
-          Services
+          Service Management
         </h2>
         <Link to="/Service/form" className="border bg-yellow-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-yellow-400">
           Add Service

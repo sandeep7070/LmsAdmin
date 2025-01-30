@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from "sonner";
 import { Upload, AlertCircle, X } from 'lucide-react';
 import { createTeam } from '../../Redux/Actions/TeamAction.js';
-
+                                        
 const ProfileForm = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const [formState, setFormState] = useState({
@@ -172,7 +172,7 @@ const ProfileForm = ({ isOpen, onClose }) => {
                 />
                 <label
                   htmlFor="imageUpload"
-                  className={`absolute bottom-0 right-0 bg-yellow-400 p-2 rounded-full cursor-pointer 
+                  className={`absolute bottom-0 right-0 bg-gradient-to-r from-yellow-500 to-yellow-600 p-2 rounded-full cursor-pointer 
                     hover:bg-yellow-500 transition-colors ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   <Upload className="h-5 w-5 text-white" />
@@ -290,7 +290,7 @@ const ProfileForm = ({ isOpen, onClose }) => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="flex-1 bg-yellow-400 text-white py-2 px-4 rounded-lg hover:bg-yellow-500 
+                className="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-500 
                   transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Adding...' : 'Add Member'}

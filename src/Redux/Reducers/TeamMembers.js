@@ -15,7 +15,7 @@ import {
     UPDATE_TEAMMEMBER_SUCCESS,
     UPDATE_TEAMMEMBER_FAILURE
 } from '../Constants/TeamMembers.js';
-
+                     
 const initialState = {
   teams: [],
   members: [],
@@ -25,7 +25,7 @@ const initialState = {
   currentTeam: null
 
 };
-
+                          
 export const teamReducer = (state = initialState, action) => {
   switch (action.type) {
     // Create Team
@@ -43,7 +43,7 @@ export const teamReducer = (state = initialState, action) => {
           teams: [...state.teams, action.payload],
           error: null
         };
-
+                             
       case CREATE_TEAM_FAILURE:
         return {
           ...state,

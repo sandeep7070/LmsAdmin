@@ -14,6 +14,7 @@ import ServiceForm from './Pages/Service/ServiceForm'
 import UpdateJob from './Pages/Update-of-Job/UpdateJob'
 import NoticeBoad from './Pages/Notice-Boad/NoticeBoad'
 import CourseForm from './Pages/Course/CourseForm';
+import AdminDashboard from './Components/Staff ManagerDasboad/AdminDashboad';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<Dashboadsh />} />
+            <Route path= "/StaffManeger" element={<AdminDashboard/>} />
             <Route path="/Service" element={<ServiceTable />} />
             <Route path='/Service/form' element={<ServiceForm />} />
             <Route path="/Team" element={<SimpleTable />} />
