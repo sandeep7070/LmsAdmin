@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { toast } from "sonner";
 import { useDispatch,useSelector } from "react-redux";
-import { updateService } from "../../Redux/Actions/serviceActions";
+import { updateService,fetchServices } from "../../Redux/Actions/serviceActions";
+import Spinner from "../../Components/Spinner/Spinner";
 
 
 const ServiceUpdateModal = ({ isOpen, onClose, service }) => {
@@ -11,7 +12,6 @@ const ServiceUpdateModal = ({ isOpen, onClose, service }) => {
   const [image, setImage] = useState(null);
   const dispatch = useDispatch();
   const {status} = useSelector((state)=>state.services);
-  console.log(status)
 
   // Reset the state whenever the service prop changes
   useEffect(() => {
@@ -36,6 +36,7 @@ const ServiceUpdateModal = ({ isOpen, onClose, service }) => {
       const res = await dispatch(updateService({ serviceId: service._id, title, description }));
       if (status === "succeeded") {
         toast.success("Service updated successfully!");
+        dispatch(fetchServices());
         onClose();
       } else if (status === "failed") {
         toast.error("Failed to update service.");
@@ -118,7 +119,9 @@ const ServiceUpdateModal = ({ isOpen, onClose, service }) => {
           </button>
         </div>
       </div>
-    </div>
+      {/* Spinner  */}
+      {status === "loading" && <Spinner/>}
+          </div>
   );
 };
 

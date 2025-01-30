@@ -6,11 +6,12 @@ import ServiceUpdateModal from "./ServiceUpdateModal";
 import ServiceDeleteModal from "./ServiceDeleteModal";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchServices } from "../../Redux/Actions/serviceActions";
+import Spinner from "../../Components/Spinner/Spinner";
 
 const ServiceTable = () => {
   const dispatch = useDispatch();
   // Fetching services from the Redux store
-  const services = useSelector((state) => state.services.services);
+  const {services,status} = useSelector((state) => state.services);
 
   // Fetch services on component mount
   useEffect(() => {
@@ -116,6 +117,7 @@ const ServiceTable = () => {
         onClose={() => setIsDeleteModalOpen(false)}
         id={selectedService}
       />
+      {status === "loading" && <Spinner/>}
     </div>
   );
 };

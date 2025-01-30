@@ -4,6 +4,7 @@ import { addService } from "../../Redux/Actions/serviceActions";
 import { Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import Spinner from "../../Components/Spinner/Spinner";
 
 const ServiceForm = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const ServiceForm = () => {
   const [coverImage, setCoverImage] = useState(null);
   const titleRef = useRef();
   const descriptionRef = useRef();
+
 
   const handleFileChange = (e) => {
     setCoverImage(e.target.files[0]); // Store the selected file in state
@@ -159,6 +161,7 @@ const ServiceForm = () => {
           </Link>
         </div>
       </form>
+      {status === "loading" && <Spinner/>}
     </div>
   );
 };

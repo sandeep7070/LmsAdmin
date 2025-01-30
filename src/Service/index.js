@@ -31,7 +31,8 @@ export const  getSingleCourse = "https://amsbackendlive.onrender.com/api/v1/cour
 export const  updateCourse = "https://amsbackendlive.onrender.com/api/v1/course/updateCourse";   // :id 
 export const  deleteCourse = "https://amsbackendlive.onrender.com/api/v1/course/deleteCourse";   // :id 
 
-
+// Testimonial Routes
+export const  getAllTestimonial = "https://amsbackendlive.onrender.com/api/v1/testimonials/getAllTestimonials";
 
 
 
