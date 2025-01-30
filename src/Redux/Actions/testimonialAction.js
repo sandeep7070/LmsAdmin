@@ -50,7 +50,7 @@ export const deleteTestimonials = createAsyncThunk(
         }
       );
       const data = await response.json();
-      return  testimonialId;   //Fix the issue in backend to return the testimonialId
+      return data.data;   
     } catch (error) {
       console.error("Error at deleting testimonial", error);
     }

@@ -4,6 +4,8 @@ import { HandCoins, Filter, Edit2, Trash2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchExpenses } from "../../Redux/Actions/expenseActions";
 import Spinner from "../../Components/Spinner/Spinner";
+import ExpenseUpdateModal from "./ExpenseUpdateModal";
+import ExpenseDeleteModal from "./ExpenseDeleteModal";
 
 const Expense = () => {
   const [filters, setFilters] = useState({
@@ -12,6 +14,7 @@ const Expense = () => {
     dateTo: "",
   });
 
+  // Fetch Data from Redux Store
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchExpenses());
@@ -23,6 +26,8 @@ const Expense = () => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
+
+  // Filter responses 
   const filteredExpenses = expenses.filter((expense) => {
     const expenseDate = new Date(expense.date);
     const fromDate = filters.dateFrom ? new Date(filters.dateFrom) : null;
@@ -44,6 +49,24 @@ const Expense = () => {
       dateTo: "",
     });
   };
+
+
+  // Hanlde Edit 
+  const [isUpdateModal,setIsUpdateModal] = useState(false);
+  const [expenseToUpdate, setExpenseToUpdate] = useState(null);
+  const handleEdit = (expense) => {
+    setIsUpdateModal(true);
+    setExpenseToUpdate(expense);
+  }
+
+
+  // Handle Delete 
+  const [isDeleteModal,setIsDeleteModal] = useState(false);
+  const handleDelete = (expense) => {
+    setIsDeleteModal(true);
+    setExpenseToUpdate(expense);
+  }
+
 
   return (
     <div className="p-6">
@@ -69,7 +92,7 @@ const Expense = () => {
           Clear Filters
         </button>
       )}
-
+    <h1 className="text-4xl text-center font-semibold">Total Transactions: {expenses?.length}</h1>
       <div className="bg-white p-4 rounded-lg shadow mb-6">
         <div className="flex items-center mb-4">
           <Filter className="w-5 h-5 text-gray-500 mr-2" />
@@ -104,7 +127,7 @@ const Expense = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-y-auto max-h-[70vh]">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -147,10 +170,10 @@ const Expense = () => {
                   {expense.paymentMethod}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right  font-medium">
-                  <button className="text-blue-600 hover:text-blue-900 mr-4">
+                  <button onClick={()=>handleEdit(expense)} className="text-blue-600 hover:text-blue-900 mr-4">
                     <Edit2 className="w-4 h-4" />
                   </button>
-                  <button className="text-red-600 hover:text-red-900">
+                  <button onClick={()=>handleDelete(expense._id)} className="text-red-600 hover:text-red-900">
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </td>
@@ -160,6 +183,16 @@ const Expense = () => {
         </table>
       </div>
       {status === "loading" && <Spinner />}
+      <ExpenseUpdateModal
+      isOpen={isUpdateModal}
+      expense = {expenseToUpdate}
+      onClose={()=>setIsUpdateModal(false)}
+      />
+      <ExpenseDeleteModal
+      isOpen={isDeleteModal}
+      onClose = {()=>setIsDeleteModal(false)}
+      id={expenseToUpdate}
+      />
     </div>
   );
 };
