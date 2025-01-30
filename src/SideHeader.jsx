@@ -18,15 +18,23 @@ import {
   ChevronRight, 
   ChevronLeft,
   LayoutDashboard,
+  HandCoins
+  
 } from 'lucide-react';
 
 const navigationItems = [
   { id: '/', name: 'Dashboard', icon: LayoutDashboard },
+<<<<<<< HEAD
   { id: '/StaffManeger', name: 'Staff Manager Dashboard', icon: RiAdminFill },
   { id: '/Service', name: 'Service Management', icon: MdMiscellaneousServices  },  
   { id: '/Team', name: 'Team(Protiles)', icon: AiOutlineTeam  },
+=======
+  { id: '/Service', name: 'Service', icon: MdMiscellaneousServices  },  
+  { id: '/Team', name: 'Team(Profiles)', icon: AiOutlineTeam  },
+>>>>>>> 46a4f0fc2bf940282c6d353f42ca4a3a6880b0f3
   { id: '/About', name: 'About Company', icon: FcAbout  },
   { id: '/Course', name: 'Course', icon: SiCoursera },
+  { id: '/expense', name: 'Expense', icon: HandCoins },
   { id: '/Gallery', name: 'Gallery', icon: GrGallery },
   { id: '/Blog', name: 'Content Blog ', icon: FaBlog  },
   { id: '/Testimonials', name: 'Testimonials', icon: FaRegNoteSticky },

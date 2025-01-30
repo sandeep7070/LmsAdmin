@@ -1,12 +1,14 @@
 import React, { useRef, useState } from "react";
 import { toast } from "sonner";
-import { Settings } from "lucide-react";
+import { Settings,SquareCheckBig,ImageUp } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { addTestimonials } from "../../Redux/Actions/testimonialAction";
-
+import Spinner from '../../Components/Spinner/Spinner'
 const TestimonialsForm = () => {
   const dispatch = useDispatch();
+  const {status} = useSelector((state)=>state.testimonials);
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -75,9 +77,7 @@ const TestimonialsForm = () => {
         
       // Handle form submission (for example, send it to an API)
        const res = await dispatch(addTestimonials(data));
-       console.log(res)
-      toast.success("Form submitted successfully!");
-      console.log("Form Data:", formData);
+      toast.success("Testimonials added  successfully!");
 
       // Reset form
       setFormData({
@@ -166,16 +166,37 @@ const TestimonialsForm = () => {
 
         {/* Image Input */}
         <div className="mb-4">
-          <label htmlFor="image" className="block my-2 text-lg font-semibold text-gray-700">
-            Upload Image
-          </label>
+        <label
+                className="text-lg  font-semibold text-gray-700 mb-1 cursor-pointer"
+                htmlFor="image"
+              >
+                Testimonial Image
+                <div className="font-medium p-2 mt-2  rounded-md border-2 border-gray-400 flex justify-center items-center gap-x-4">
+                  {formData.image === null ? (
+                    <>
+                      <ImageUp size={30} className="text-gray-700" />
+                      <span className="font-sans text-gray-400 text-sm">
+                        Upload Course Image
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="font-sans text-gray-400 text-sm">
+                        {formData.image.name}
+                      </span>
+                      <SquareCheckBig size={30} className="text-green-700" />
+                    </>
+                  )}
+                </div>
+              </label>
+             
           <input
             type="file"
             id="image"
             name="image"
             onChange={handleFileChange}
             accept="image/*"
-            className="w-full p-3 rounded-md border-2 outline-none focus:border-yellow-400 border-gray-400"
+            className="w-full p-3 rounded-md border-2 outline-none focus:border-yellow-400 border-gray-400 hidden"
           />
         </div>
 
@@ -203,11 +224,13 @@ const TestimonialsForm = () => {
           <button
             type="submit"
             className="w-36 my-4 p-3 hover:bg-yellow-500 bg-yellow-400 text-white rounded-md border text-center"
+            disabled ={status === "loading"}
           >
-            Submit
+            {status === "loading" ? 'Loading' :'Submit'}
           </button>
         </div>
       </form>
+      {status === "loading" && <Spinner/>}
     </div>
   );
 };
