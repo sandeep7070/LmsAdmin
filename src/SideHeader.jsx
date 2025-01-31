@@ -11,6 +11,8 @@ import { FaRegNoteSticky } from "react-icons/fa6";
 import { MdAppRegistration } from "react-icons/md";
 import { MdOutlineUpdate } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
+
 
 import { 
   ChevronRight, 
@@ -22,13 +24,19 @@ import {
 
 const navigationItems = [
   { id: '/', name: 'Dashboard', icon: LayoutDashboard },
+<<<<<<< HEAD
+  { id: '/StaffManeger', name: 'Staff Manager Dashboard', icon: RiAdminFill },
+  { id: '/Service', name: 'Service Management', icon: MdMiscellaneousServices  },  
+  { id: '/Team', name: 'Team(Protiles)', icon: AiOutlineTeam  },
+=======
   { id: '/Service', name: 'Service', icon: MdMiscellaneousServices  },  
   { id: '/Team', name: 'Team(Profiles)', icon: AiOutlineTeam  },
+>>>>>>> 46a4f0fc2bf940282c6d353f42ca4a3a6880b0f3
   { id: '/About', name: 'About Company', icon: FcAbout  },
   { id: '/Course', name: 'Course', icon: SiCoursera },
   { id: '/expense', name: 'Expense', icon: HandCoins },
   { id: '/Gallery', name: 'Gallery', icon: GrGallery },
-  { id: '/Blog', name: 'Blog', icon: FaBlog  },
+  { id: '/Blog', name: 'Content Blog ', icon: FaBlog  },
   { id: '/Testimonials', name: 'Testimonials', icon: FaRegNoteSticky },
   { id: '/Registrations', name: 'Registrations', icon: MdAppRegistration },
   { id: '/Notice-Board', name: 'Notice Board', icon: FaChalkboardTeacher },
@@ -73,7 +81,7 @@ const SideLayout = () => {
 
       <button 
         onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-        className="absolute -right-3 top-3 bg-[#edba12] rounded-full p-2.5 shadow-lg hover:bg-[#edba12] transition-colors"
+        className="absolute -right-3 top-3  bg-gradient-to-r  from-[#edba12] to-yellow-700 rounded-full p-2.5 shadow-lg hover:bg-[#edba12] transition-colors"
         aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
       >
         {isSidebarCollapsed ? 
@@ -93,8 +101,8 @@ const SideLayout = () => {
                   transition-all duration-200
                   rounded-s-lg
                   ${location.pathname === item.id 
-                    ? 'text-black bg-[#edba12] shadow-md' 
-                    : 'text-black hover:bg-[#edba12] hover:text-black hover:shadow-md'}
+                    ? 'text-black bg-gradient-to-r  from-[#edba12] to-yellow-600 shadow-md' 
+                    : 'text-black hover:bg-[#edba12d0] hover:text-black hover:shadow-md'}
                   ${isSidebarCollapsed ? 'justify-center' : 'justify-start'}
                 `}
               >    

@@ -17,98 +17,167 @@ import {
   UPDATE_TEAMMEMBER_FAILURE
 } from '../Constants/TeamMembers.js';
 
- const createTeam = (teamData) => async (dispatch) => {
+
+const BASE_URL = 'https://amsbackendlive.onrender.com/api/v1/team';
+
+
+const createTeam = (formData) => async (dispatch) => {
   try {
     dispatch({ type: CREATE_TEAM_REQUEST });
-    
-    const { data } = await axios.post('https://amsbackendlive.onrender.com/api/v1/team/Create', teamData);
-     console.log("data", data)
-    dispatch({
-      type: CREATE_TEAM_SUCCESS,
-      payload: data
+
+    if (!(formData instanceof FormData)) {
+      throw new Error('Invalid form data format');
+    }
+
+    const response = await axios.post(`${BASE_URL}/Create`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
+
+    dispatch({ 
+      type: CREATE_TEAM_SUCCESS, 
+      payload: response.data.data || response.data // Ensure we're getting the correct data structure
+    });
+
+    return { 
+      status: 'succeeded', 
+      data: response.data 
+    };
   } catch (error) {
-    dispatch({
-      type: CREATE_TEAM_FAILURE,
-      payload: error.response?.data?.message || error.message
+    console.error('Create team error:', {
+      status: error.response?.status,
+      data: error.response?.data,
+      message: error.message
     });
+
+    dispatch({ 
+      type: CREATE_TEAM_FAILURE, 
+      payload: error.response?.data?.message || error.message 
+    });
+
+    return {
+      status: 'failed',
+      error: error.response?.data?.message || error.message || 'Failed to create team member'
+    };
   }
 };
 
- const getAllTeamMembers = () => async (dispatch) => {
+const getAllTeamMembers = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALLTEAMMEMBERS_REQUEST });
     
-    const { data } = await axios.get('https://amsbackendlive.onrender.com/api/v1/team/getAllTeamMembers');
+    const response = await axios.get(`${BASE_URL}/getAllTeamMembers`);
     
-    console.log("API Response:", data);
-    console.log("Number of Team Members:", data.length);
-   
-
+    const teamMembers = Array.isArray(response.data?.data) ? response.data.data :
+                       Array.isArray(response.data?.teamMembers) ? response.data.teamMembers :
+                       Array.isArray(response.data?.team) ? response.data.team :
+                       Array.isArray(response.data) ? response.data :
+                       [];
 
     dispatch({
       type: GET_ALLTEAMMEMBERS_SUCCESS,
-      payload: data
+      payload: teamMembers
     });
+
+    return teamMembers;
   } catch (error) {
     dispatch({
       type: GET_ALLTEAMMEMBERS_FAILURE,
       payload: error.response?.data?.message || error.message
     });
+    throw error;
   }
 };
 
- const getTeamMemberById = (id) => async (dispatch) => {
+const getTeamMemberById = (id) => async (dispatch) => {
   try {
+    if (!id) {
+      throw new Error('Team member ID is required');
+    }
+
     dispatch({ type: GET_TEAMMEMBERBYID_REQUEST });
     
-    const { data } = await axios.get(`https://amsbackendlive.onrender.com/api/v1/team/getTeamMemberById${id}`);
+    const response = await axios.get(`${BASE_URL}/getTeamMemberById/${id}`);
     
     dispatch({
       type: GET_TEAMMEMBERBYID_SUCCESS,
-      payload: data
+      payload: {
+        teamMember: response.data.teamMembers,
+        count: response.data.count
+      }
     });
+
+    return response.data.teamMembers;
   } catch (error) {
     dispatch({
       type: GET_TEAMMEMBERBYID_FAILURE,
       payload: error.response?.data?.message || error.message
     });
+    throw error;
   }
 };
 
- const deleteTeamMember = (id) => async (dispatch) => {
+const deleteTeamMember = (id) => async (dispatch) => {
   try {
+    if (!id) {
+      throw new Error('Team member ID is required');
+    }
+
     dispatch({ type: DELETE_TEAMMEMBER_REQUEST });
     
-    await axios.delete(`https://amsbackendlive.onrender.com/api/v1/team/deleteTeamMember${id}`);
-    
-    dispatch({
-      type: DELETE_TEAMMEMBER_SUCCESS,
-      payload: id
-    });
+    const response = await axios.delete(`${BASE_URL}/deleteTeamMember/${id}`);
+
+    if (response.data) {
+      dispatch({ 
+        type: DELETE_TEAMMEMBER_SUCCESS,
+        payload: id
+      });
+
+      return { success: true };
+    } else {
+      throw new Error('Failed to delete team member');
+    }
   } catch (error) {
-    dispatch({
+    dispatch({ 
       type: DELETE_TEAMMEMBER_FAILURE,
-      payload: error.response?.data?.message || error.message
+      payload: error.message || 'Failed to delete team member'
     });
+    throw error;
   }
 };
 
- const updateTeamMember = (id, memberData) => async (dispatch) => {
+const updateTeamMember = (id, memberData) => async (dispatch) => {
   try {
+    if (!id) {
+      throw new Error('Team member ID is required');
+    }
+
+    if (!memberData || Object.keys(memberData).length === 0) {
+      throw new Error('Member data is required');
+    }
+
     dispatch({ type: UPDATE_TEAMMEMBER_REQUEST });
     
-    const { data } = await axios.put(`https://amsbackendlive.onrender.com/api/v1/team/updateTeamMember${id}`, memberData);
+    const response = await axios.put(`${BASE_URL}/updateTeamMember/${id}`, memberData); {
+      
+    }
     
+   
+
+
     dispatch({
       type: UPDATE_TEAMMEMBER_SUCCESS,
-      payload: data
+      payload: response.data
     });
+
+    return response.data;
   } catch (error) {
     dispatch({
       type: UPDATE_TEAMMEMBER_FAILURE,
       payload: error.response?.data?.message || error.message
     });
+    throw error;
   }
 };
 
@@ -118,4 +187,4 @@ export {
   getTeamMemberById,
   deleteTeamMember,
   updateTeamMember
-}
+};
