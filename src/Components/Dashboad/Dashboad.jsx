@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { 
   Bell,
   Search,
@@ -17,7 +17,8 @@ import { SiCoursera } from "react-icons/si";
 import { FaBlog } from "react-icons/fa6";
 import { GrUpdate } from "react-icons/gr";
 import { GrUserAdmin } from "react-icons/gr";
-
+import { useDispatch,useSelector } from 'react-redux';
+import { fetchExpenses } from '../../Redux/Actions/expenseActions';
 const salesData = [
   { name: 'Jan', value: 4000 },
   { name: 'Feb', value: 3000 },
@@ -26,8 +27,17 @@ const salesData = [
   { name: 'May', value: 6000 },
   { name: 'Jun', value: 5500 },
 ];
+// Expenses Data
 
 const AdminDashboard = () => {
+  
+  const dispatch = useDispatch();
+
+   useEffect(()=>{
+    dispatch(fetchExpenses());
+   },[dispatch])
+   const {expenses,status} = useSelector((state)=>state.expenses);
+
   return (
     <div className="min-h-screen bg-gray-200">
       {/* Top Navigation */}
@@ -148,26 +158,28 @@ const AdminDashboard = () => {
           </div>
 
           {/* Recent Activity */}
-          <div className="bg-gray-100 rounded-lg shadow p-6">
+          <div className="bg-gray-100 rounded-lg shadow p-6 overflow-y-auto max-h-96">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h2>
-            <div className="space-y-4">
-              {[1, 2, 3, 4].map((item) => (
-                <div key={item} className="flex items-center p-3 hover:bg-gray-50 rounded-lg">
-                 
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-900">
-                      John Doe made a purchase
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      2 minutes ago
-                    </p>
-                  </div>
-                  <span className="ml-auto text-sm text-gray-500">
-                    $299
-                  </span>
-                </div>
-              ))}
-            </div>
+           { status === "loading" ? <h1>Loading....</h1>:(
+             <div className="space-y-4">
+             {expenses && expenses?.map((item) => (
+               <div key={item._id} className="flex items-center p-3 hover:bg-gray-50 rounded-lg">
+                
+                 <div className="ml-4">
+                   <p className="text-sm font-medium text-gray-900">
+                    {item.description}
+                   </p>
+                   <p className="text-sm text-gray-500">
+                     {new Date(item.date).getDay() } ago
+                   </p>
+                 </div>
+                 <span className="ml-auto text-sm text-gray-500">
+                   ${item.amount}
+                 </span>
+               </div>
+             ))}
+           </div>
+           )}
           </div>
         </div>
 
