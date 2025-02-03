@@ -11,7 +11,7 @@ import Spinner from "../../Components/Spinner/Spinner";
 const CourseList = () => {
   const dispatch = useDispatch();
 
-  const {courses,status} = useSelector((state) => state.courses);
+  const { courses, status } = useSelector((state) => state.courses);
 
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -38,7 +38,6 @@ const CourseList = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen py-12">
-      {status === "loading" && <Spinner />}
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Courses</h1>
@@ -65,60 +64,64 @@ const CourseList = () => {
                   <th className="p-4 w-32 font-semibold">Delete</th>
                 </tr>
               </thead>
-              <tbody>
-                {courses?.map((course) => (
-                  <tr key={course._id} className="border-b hover:bg-gray-50">
-                    <td className="p-4">{course.courseCode}</td>
-                    <td className="p-4 font-medium">{course.title}</td>
-                    <td className="p-4 text-gray-600">
-                      $ {course.courseFees - course.discountendfees}
-                    </td>
-                    <td className="p-4 text-gray-600">
-                      $ {course.minFeesToPay}
-                    </td>
-                    <td className="p-4 text-gray-600">{course.duration}</td>
-                    <td className="p-4">
-                      <Button
-                        variant="text"
-                        size="small"
-                        onClick={() => handleView(course.id)}
-                        className="h-8 w-8 p-0"
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                    </td>
-                    <td className="p-4">
-                      <Button
-                        variant="text"
-                        size="small"
-                        onClick={() => handleEdit(course)}
-                        className="h-8 w-8 p-0"
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                    </td>
-                    <td className="p-4">
-                      <Button
-                        variant="text"
-                        size="small"
-                        className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                        onClick={() => handleDelete(course._id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              {status === "loading" ? (
+                <Spinner />
+              ) : (
+                <tbody>
+                  {courses?.map((course) => (
+                    <tr key={course._id} className="border-b hover:bg-gray-50">
+                      <td className="p-4">{course.courseCode}</td>
+                      <td className="p-4 font-medium">{course.title}</td>
+                      <td className="p-4 text-gray-600">
+                        $ {course.courseFees - course.discountendfees}
+                      </td>
+                      <td className="p-4 text-gray-600">
+                        $ {course.minFeesToPay}
+                      </td>
+                      <td className="p-4 text-gray-600">{course.duration}</td>
+                      <td className="p-4">
+                        <Button
+                          variant="text"
+                          size="small"
+                          onClick={() => handleView(course.id)}
+                          className="h-8 w-8 p-0"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </td>
+                      <td className="p-4">
+                        <Button
+                          variant="text"
+                          size="small"
+                          onClick={() => handleEdit(course)}
+                          className="h-8 w-8 p-0"
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                      </td>
+                      <td className="p-4">
+                        <Button
+                          variant="text"
+                          size="small"
+                          className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                          onClick={() => handleDelete(course._id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
             </table>
           </div>
           {/* Update Modal */}
-          {isUpdateModalOpen && 
+          {isUpdateModalOpen && (
             <CourseUpdateModal
               course={selectedCourse}
               onClose={() => setIsUpdateModalOpen(false)}
             />
-          }
+          )}
           {/* Delete Modal */}
           <CourseDeleteModal
             isOpen={isDeleteModalOpen}

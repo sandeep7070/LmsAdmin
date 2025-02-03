@@ -6,6 +6,7 @@ import { selectTeamMembers, selectTeamLoading, selectTeamError } from '../../Red
 import ProfileForm from './TeamPopup.jsx';
 import DeleteConfirmationPopup from './TeamDelete.jsx';
 import { toast } from 'sonner';
+import Spinner from '../../Components/Spinner/Spinner.jsx';
 
 
 const SortIcon = ({ field, sortField, sortDirection }) => {
@@ -57,6 +58,7 @@ function TeamMemberList() {
       
       toast.dismiss(loadingToast);
       toast.success(`${memberToDelete.name} has been deleted successfully!`);
+      dispatch(getAllTeamMembers());
       
       // Close the popup and reset the state
       setDeletePopupOpen(false);
@@ -109,9 +111,7 @@ function TeamMemberList() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-lg text-gray-600">Loading team members...</div>
-      </div>
+     <Spinner/>
     );
   }
 

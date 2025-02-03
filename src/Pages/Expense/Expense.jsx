@@ -26,8 +26,7 @@ const Expense = () => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
-
-  // Filter responses 
+  // Filter responses
   const filteredExpenses = expenses.filter((expense) => {
     const expenseDate = new Date(expense.date);
     const fromDate = filters.dateFrom ? new Date(filters.dateFrom) : null;
@@ -50,23 +49,20 @@ const Expense = () => {
     });
   };
 
-
-  // Hanlde Edit 
-  const [isUpdateModal,setIsUpdateModal] = useState(false);
+  // Hanlde Edit
+  const [isUpdateModal, setIsUpdateModal] = useState(false);
   const [expenseToUpdate, setExpenseToUpdate] = useState(null);
   const handleEdit = (expense) => {
     setIsUpdateModal(true);
     setExpenseToUpdate(expense);
-  }
+  };
 
-
-  // Handle Delete 
-  const [isDeleteModal,setIsDeleteModal] = useState(false);
+  // Handle Delete
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
   const handleDelete = (expense) => {
     setIsDeleteModal(true);
     setExpenseToUpdate(expense);
-  }
-
+  };
 
   return (
     <div className="p-6">
@@ -92,7 +88,9 @@ const Expense = () => {
           Clear Filters
         </button>
       )}
-    <h1 className="text-4xl text-center font-semibold">Total Transactions: {expenses?.length}</h1>
+      <h1 className="text-4xl text-center font-semibold">
+        Total Transactions: {expenses?.length}
+      </h1>
       <div className="bg-white p-4 rounded-lg shadow mb-6">
         <div className="flex items-center mb-4">
           <Filter className="w-5 h-5 text-gray-500 mr-2" />
@@ -151,47 +149,56 @@ const Expense = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {filteredExpenses.map((expense) => (
-              <tr key={expense._id}>
-                <td className="px-6 py-4 whitespace-nowrap  text-gray-500">
-                  {new Date(expense.date).toLocaleDateString()}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap  text-gray-900">
-                  {expense.description}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap  text-gray-500">
-                  {expense.category}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap  text-gray-900">
-                  ${expense.amount.toFixed(2)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap  text-gray-500">
-                  {expense.paymentMethod}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right  font-medium">
-                  <button onClick={()=>handleEdit(expense)} className="text-blue-600 hover:text-blue-900 mr-4">
-                    <Edit2 className="w-4 h-4" />
-                  </button>
-                  <button onClick={()=>handleDelete(expense._id)} className="text-red-600 hover:text-red-900">
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          {status === "loading" ? (
+            <Spinner />
+          ) : (
+            <tbody className="bg-white divide-y divide-gray-200">
+              {filteredExpenses.map((expense) => (
+                <tr key={expense._id}>
+                  <td className="px-6 py-4 whitespace-nowrap  text-gray-500">
+                    {new Date(expense.date).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap  text-gray-900">
+                    {expense.description}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap  text-gray-500">
+                    {expense.category}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap  text-gray-900">
+                    ${expense.amount.toFixed(2)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap  text-gray-500">
+                    {expense.paymentMethod}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right  font-medium">
+                    <button
+                      onClick={() => handleEdit(expense)}
+                      className="text-blue-600 hover:text-blue-900 mr-4"
+                    >
+                      <Edit2 className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(expense._id)}
+                      className="text-red-600 hover:text-red-900"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )}
         </table>
       </div>
-      {status === "loading" && <Spinner />}
       <ExpenseUpdateModal
-      isOpen={isUpdateModal}
-      expense = {expenseToUpdate}
-      onClose={()=>setIsUpdateModal(false)}
+        isOpen={isUpdateModal}
+        expense={expenseToUpdate}
+        onClose={() => setIsUpdateModal(false)}
       />
       <ExpenseDeleteModal
-      isOpen={isDeleteModal}
-      onClose = {()=>setIsDeleteModal(false)}
-      id={expenseToUpdate}
+        isOpen={isDeleteModal}
+        onClose={() => setIsDeleteModal(false)}
+        id={expenseToUpdate}
       />
     </div>
   );

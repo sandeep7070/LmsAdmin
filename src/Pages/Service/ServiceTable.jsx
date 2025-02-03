@@ -11,7 +11,7 @@ import Spinner from "../../Components/Spinner/Spinner";
 const ServiceTable = () => {
   const dispatch = useDispatch();
   // Fetching services from the Redux store
-  const {services,status} = useSelector((state) => state.services);
+  const { services, status } = useSelector((state) => state.services);
 
   // Fetch services on component mount
   useEffect(() => {
@@ -43,7 +43,10 @@ const ServiceTable = () => {
           <Settings className="w-6 h-6 mr-2 ml-4 text-yellow-600" />
           Service Management
         </h2>
-        <Link to="/Service/form" className="border bg-yellow-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-yellow-400">
+        <Link
+          to="/Service/form"
+          className="border bg-yellow-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-yellow-400"
+        >
           Add Service
         </Link>
       </div>
@@ -61,45 +64,49 @@ const ServiceTable = () => {
                 <th className="p-4 w-32 font-semibold">Delete</th>
               </tr>
             </thead>
-            <tbody>
-              {services.map((service, index) => (
-                <tr key={service._id} className="border-b hover:bg-gray-50">
-                  <td className="p-4">{index + 1}</td>
-                  <td className="p-4 font-medium">{service.title}</td>
-                  <td className="p-4 text-gray-600">{service.description}</td>
-                  <td className="p-4">
-                    <Button
-                      variant="text"
-                      size="small"
-                      onClick={() => handleView(service._id)}
-                      className="h-8 w-8 p-0"
-                    >
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                  </td>
-                  <td className="p-4">
-                    <Button
-                      variant="text"
-                      size="small"
-                      onClick={() => handleEdit(service)}
-                      className="h-8 w-8 p-0"
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                  </td>
-                  <td className="p-4">
-                    <Button
-                      variant="text"
-                      size="small"
-                      className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                      onClick={() => handleDelete(service._id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+            {status === "loading" ? (
+              <Spinner />
+            ) : (
+              <tbody>
+                {services.map((service, index) => (
+                  <tr key={service._id} className="border-b hover:bg-gray-50">
+                    <td className="p-4">{index + 1}</td>
+                    <td className="p-4 font-medium">{service.title}</td>
+                    <td className="p-4 text-gray-600">{service.description}</td>
+                    <td className="p-4">
+                      <Button
+                        variant="text"
+                        size="small"
+                        onClick={() => handleView(service._id)}
+                        className="h-8 w-8 p-0"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                    </td>
+                    <td className="p-4">
+                      <Button
+                        variant="text"
+                        size="small"
+                        onClick={() => handleEdit(service)}
+                        className="h-8 w-8 p-0"
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                    </td>
+                    <td className="p-4">
+                      <Button
+                        variant="text"
+                        size="small"
+                        className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                        onClick={() => handleDelete(service._id)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
           </table>
         </div>
       </div>
@@ -117,7 +124,6 @@ const ServiceTable = () => {
         onClose={() => setIsDeleteModalOpen(false)}
         id={selectedService}
       />
-      {status === "loading" && <Spinner/>}
     </div>
   );
 };

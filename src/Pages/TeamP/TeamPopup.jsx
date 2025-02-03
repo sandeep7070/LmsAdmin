@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from "sonner";
 import { Upload, AlertCircle, X } from 'lucide-react';
-import { createTeam } from '../../Redux/Actions/TeamAction.js';
+import { createTeam,getAllTeamMembers } from '../../Redux/Actions/TeamAction.js';
                                         
 const ProfileForm = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -113,6 +113,7 @@ const ProfileForm = ({ isOpen, onClose }) => {
   
       if (response.status === 'succeeded') {
         toast.success("Team member added successfully!");
+        dispatch(getAllTeamMembers())
         onClose();
       } else {
         const errorMsg = response.error || "Failed to add team member. Please try again.";

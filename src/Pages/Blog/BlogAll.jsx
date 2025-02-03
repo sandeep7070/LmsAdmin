@@ -4,6 +4,7 @@ import { Eye, Trash2 } from 'lucide-react';
 import { FaBlog } from "react-icons/fa6";
 import BlogPopup from '../Blog/AddPopup';
 import { getAllBlogs, deleteBlog } from '../../Redux/Actions/BlogAction.js';
+import Spinner from '../../Components/Spinner/Spinner.jsx';
 
 const BlogManagement = () => {
   const dispatch = useDispatch();
@@ -132,9 +133,7 @@ const BlogManagement = () => {
 
       {/* Table section */}
       {blogsState.loading ? (
-        <div className="w-full h-64 flex items-center justify-center">
-          <div className="text-gray-600">Loading...</div>
-        </div>
+        <Spinner/>
       ) : blogsState.error ? (
         <div className="w-full p-4 bg-red-50 border border-red-200 rounded-lg">
           <div className="text-red-600">{blogsState.error}</div>
