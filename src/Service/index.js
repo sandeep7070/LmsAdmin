@@ -35,4 +35,12 @@ export const  deleteCourse = "https://amsbackendlive.onrender.com/api/v1/course/
 export const  getAllTestimonial = "https://amsbackendlive.onrender.com/api/v1/testimonials/getAllTestimonials";
 
 
+// JOb Routes
+
+export const getAllJobs = "https://amsbackendlive.onrender.com/api/v1/job/getAllJobs";
+export const createJobs = "https://amsbackendlive.onrender.com/api/v1/job/Create";
+export const deleteJob = "https://amsbackendlive.onrender.com/api/v1/job/deleted/:id";
+
+
+
 
