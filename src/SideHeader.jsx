@@ -37,7 +37,7 @@ const navigationItems = [
   { id: '/Notice-Board', name: 'Notice Board', icon: FaChalkboardTeacher },
 
   { id: '/Enquiries', name: 'Enquiries', icon: SiCoursera },
-  { id: '/Update-For-job', name: 'Update for job', icon: MdOutlineUpdate },
+  { id: '/Job', name: 'Update for job', icon: MdOutlineUpdate },
   { id: '/logout', name: 'logout', icon: IoMdLogOut },
 ];
 

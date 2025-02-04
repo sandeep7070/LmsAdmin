@@ -59,18 +59,21 @@ export const deleteCourse = createAsyncThunk(
 
 export const updateCourse = createAsyncThunk(
   "courses/updateCourse",
-  async ({ courseId, formData }, { rejectWithValue }) => {
+  async ({ courseId, updatedData }, { rejectWithValue }) => {
     try {
       
       const response = await fetch(
         `https://amsbackendlive.onrender.com/api/v1/course/updateCourse/${courseId}`,
         {
           method: "PUT",
-          body: formData,
+          headers:{
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
         }
       );
       const data = await response.json();
-
+      console.log('Update ',data)
       if (!response.ok) {
         return rejectWithValue(data);
       }

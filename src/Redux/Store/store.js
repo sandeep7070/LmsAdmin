@@ -5,6 +5,7 @@ import serviceReducer from '../Reducers/serviceReducers'
 import testimonialReducer from '../Reducers/testimonialReducers'
 import { blogReducer } from '../Reducers/BlogReducer';
 import expenseReducer from '../Reducers/expenseReducers'
+import jobReducer from '../Reducers/jobReducers'
 
 
 const store = configureStore({
@@ -15,6 +16,7 @@ const store = configureStore({
     testimonials : testimonialReducer,
     blog: blogReducer,
     expenses : expenseReducer,
+    jobs : jobReducer
 
   },
 }); 

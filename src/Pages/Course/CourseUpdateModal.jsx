@@ -11,18 +11,18 @@ const CourseUpdateModal = ({ course, onClose }) => {
   const {status} = useSelector((state)=>state.courses)
   const [data, setData] = useState({
     title: course.title || "",
-    code: course.courseCode || "",
-    subjects: course.subject || "",
+    courseCode: course.courseCode || "",
+    subject: course.subject || "",
     duration: course.duration || "",
-    fees: course.courseFees || "",
-    discountedFees: course.discountendfees || "",
-    minimumFees: course.minFeesToPay || "",
+    courseFees: course.courseFees || "",
+    discountedFees: course.discountedFees || "",
+    minFeesToPay: course.minFeesToPay || "",
     curriculum: course.curriculum || "",
-    eligibility: course.eligibilityCriteria || "",
-    images: null,
-    domain: course.domain || "",
+    eligibilityCriteria: course.eligibilityCriteria || "",
+    domain: course.domain || "", 
+    coverImage: null,
   });
-  const [image, setImage] = useState(course.imageName || null);
+  const [image, setImage] = useState(course.coverImage || null);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -81,7 +81,7 @@ const CourseUpdateModal = ({ course, onClose }) => {
     formData.append("duration", duration);
     formData.append("courseCode", code);
     formData.append("courseFees", fees);
-    formData.append("discountendfees", discountedFees);
+    formData.append("discountedfees", discountedFees);
     formData.append("minFeesToPay", minimumFees);
     formData.append("curriculum", curriculum);
     formData.append("eligibilityCriteria", eligibility);

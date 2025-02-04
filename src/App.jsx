@@ -17,6 +17,7 @@ import CourseForm from './Pages/Course/CourseForm';
 import AdminDashboard from './Components/Staff ManagerDasboad/AdminDashboad';
 import Expense from './Pages/Expense/Expense';
 import ExpenseForm from './Pages/Expense/ExpenseForm';
+import JobForm from './Pages/Update-of-Job/JobForm';
 
 function App() {
   return (
@@ -40,7 +41,8 @@ function App() {
             <Route path="/Testimonials/form" element={<TestimonialForm />} />
             <Route path="/Registrations" element={<RegistrationForm />} />
             <Route path='/Notice-Board' element={<NoticeBoad/>} /> 
-            <Route path="/Update-For-job" element={<UpdateJob />} />  
+            <Route path="/Job" element={<UpdateJob />} />  
+            <Route path="/Job/form" element={<JobForm />} />  
           </Routes>
         </div>
         <Toaster richColors position="top-center" />

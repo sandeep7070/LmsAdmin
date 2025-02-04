@@ -18,18 +18,18 @@ const RegistrationForm = () => {
   });
 
   const roles = [
-    'web devloper',
-    'andoid devloper',
-    'diginer',
+    'Web Developer',
+    'Android Developer',
+    'Graphic Designer',
     'Digital Marketing',
-    'Analyst'
+    'Data Analyst'
   ];
 
   const categories = [
-    'react js ',
-    'react js and  node js  ',
-    'Pyhone ',
-    'java ',
+    'React JS ',
+    'React JS and  Node Js  ',
+    'Python ',
+    'Java ',
    
   ];
 
