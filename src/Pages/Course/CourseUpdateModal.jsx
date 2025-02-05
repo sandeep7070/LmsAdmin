@@ -8,31 +8,24 @@ import { toast } from "sonner";
 import Spinner from "../../Components/Spinner/Spinner";
 const CourseUpdateModal = ({ course, onClose }) => {
   const dispatch = useDispatch();
-  const {status} = useSelector((state)=>state.courses)
+  const { status } = useSelector((state) => state.courses);
   const [data, setData] = useState({
     title: course.title || "",
     courseCode: course.courseCode || "",
     subject: course.subject || "",
     duration: course.duration || "",
     courseFees: course.courseFees || "",
-    discountedFees: course.discountedFees || "",
+    discountendfees: course.discountendfees || "",
     minFeesToPay: course.minFeesToPay || "",
     curriculum: course.curriculum || "",
     eligibilityCriteria: course.eligibilityCriteria || "",
-    domain: course.domain || "", 
-    coverImage: null,
+    domain: course.domain || "",
   });
-  const [image, setImage] = useState(course.coverImage || null);
-
+  
   // Handle input changes
   const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-    if (type === "file") {
-      setImage(files[0]?.name || null);
-      setData((prev) => ({ ...prev, [name]: files[0] }));
-    } else {
+    const { name, value } = e.target;
       setData((prev) => ({ ...prev, [name]: value }));
-    }
   };
 
   // Handle ReactQuill input changes
@@ -46,50 +39,43 @@ const CourseUpdateModal = ({ course, onClose }) => {
 
     const {
       title,
-      code,
-      subjects,
+      courseCode,
+      subject,
       duration,
-      fees,
-      discountedFees,
-      minimumFees,
+      courseFees,
+      discountendfees,
+      minFeesToPay,
       curriculum,
-      eligibility,
+      eligibilityCriteria,
       domain,
-      images,
     } = data;
+
+    console.log(data);
 
     // Validation
     if (
       !title ||
-      !code ||
-      !subjects ||
+      !courseCode ||
+      !subject ||
       !duration ||
-      !fees ||
-      !discountedFees ||
-      !minimumFees ||
+      !courseFees ||
+      !discountendfees ||
+      !minFeesToPay ||
       !curriculum ||
-      !eligibility ||
+      !eligibilityCriteria ||
       !domain
     ) {
       toast.error("Please fill in all fields before updating.");
       return;
     }
+    if(discountendfees > 500 ){
+          toast.error("Discounted fees cannot be more than 500 of the total fees");
+          return;
+        }
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("subject", subjects);
-    formData.append("duration", duration);
-    formData.append("courseCode", code);
-    formData.append("courseFees", fees);
-    formData.append("discountedfees", discountedFees);
-    formData.append("minFeesToPay", minimumFees);
-    formData.append("curriculum", curriculum);
-    formData.append("eligibilityCriteria", eligibility);
-    formData.append("domain", domain);
-    if (images) formData.append("coverImage", images);
-
-    const result = await dispatch(updateCourse({ courseId: course._id, formData }));
-   console.log(result)
+    const result = await dispatch(
+      updateCourse({ courseId: course._id, updatedData: data })
+    );
     if (result.type === "courses/updateCourse/fulfilled") {
       toast.success(result.payload?.message || "Course updated successfully");
       onClose();
@@ -100,14 +86,17 @@ const CourseUpdateModal = ({ course, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      {status === "loading" && <Spinner/>}
+      {status === "loading" && <Spinner />}
       <div className="w-full max-w-4xl p-6 bg-white shadow-lg rounded-lg">
         <h2 className="text-2xl font-semibold mb-4">Update Course</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Title and Code */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="title">
+              <label
+                className="text-lg font-semibold text-gray-700 mb-1"
+                htmlFor="title"
+              >
                 Title
               </label>
               <input
@@ -121,16 +110,19 @@ const CourseUpdateModal = ({ course, onClose }) => {
               />
             </div>
             <div className="flex flex-col">
-              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="code">
+              <label
+                className="text-lg font-semibold text-gray-700 mb-1"
+                htmlFor="code"
+              >
                 Course Code
               </label>
               <input
                 type="text"
                 className="w-full p-3 rounded-md border-2 outline-none focus:border-yellow-400 border-gray-400"
                 placeholder="Enter course code..."
-                name="code"
+                name="courseCode"
                 id="code"
-                value={data.code}
+                value={data.courseCode}
                 onChange={handleChange}
               />
             </div>
@@ -139,21 +131,27 @@ const CourseUpdateModal = ({ course, onClose }) => {
           {/* Subjects and Duration */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="subjects">
+              <label
+                className="text-lg font-semibold text-gray-700 mb-1"
+                htmlFor="subjects"
+              >
                 Subjects
               </label>
               <input
                 type="text"
                 className="w-full p-3 rounded-md border-2 outline-none focus:border-yellow-400 border-gray-400"
                 placeholder="Enter subjects, separated by commas..."
-                name="subjects"
+                name="subject"
                 id="subjects"
-                value={data.subjects}
+                value={data.subject}
                 onChange={handleChange}
               />
             </div>
             <div className="flex flex-col">
-              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="duration">
+              <label
+                className="text-lg font-semibold text-gray-700 mb-1"
+                htmlFor="duration"
+              >
                 Duration
               </label>
               <select
@@ -177,30 +175,36 @@ const CourseUpdateModal = ({ course, onClose }) => {
           {/* Fees and Discounted Fees */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="fees">
+              <label
+                className="text-lg font-semibold text-gray-700 mb-1"
+                htmlFor="fees"
+              >
                 Course Fees
               </label>
               <input
                 type="number"
                 className="w-full p-3 rounded-md border-2 outline-none focus:border-yellow-400 border-gray-400"
                 placeholder="Enter course fees..."
-                name="fees"
+                name="courseFees"
                 id="fees"
-                value={data.fees}
+                value={data.courseFees}
                 onChange={handleChange}
               />
             </div>
             <div className="flex flex-col">
-              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="discountedFees">
+              <label
+                className="text-lg font-semibold text-gray-700 mb-1"
+                htmlFor="discountendfees"
+              >
                 Discounted Fees
               </label>
               <input
                 type="number"
                 className="w-full p-3 rounded-md border-2 outline-none focus:border-yellow-400 border-gray-400"
                 placeholder="Enter discounted fees..."
-                name="discountedFees"
-                id="discountedFees"
-                value={data.discountedFees}
+                name="discountendfees"
+                id="discountendfees"
+                value={data.discountendfees}
                 onChange={handleChange}
               />
             </div>
@@ -209,56 +213,27 @@ const CourseUpdateModal = ({ course, onClose }) => {
           {/* Minimum Fees and Images */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="minimumFees">
+              <label
+                className="text-lg font-semibold text-gray-700 mb-1"
+                htmlFor="minFeesToPay"
+              >
                 Minimum Fees to Pay
               </label>
               <input
                 type="number"
                 className="w-full p-3 rounded-md border-2 outline-none focus:border-yellow-400 border-gray-400"
                 placeholder="Enter minimum fees..."
-                name="minimumFees"
-                id="minimumFees"
-                value={data.minimumFees}
+                name="minFeesToPay"
+                id="minFeesToPay"
+                value={data.minFeesToPay}
                 onChange={handleChange}
               />
             </div>
             <div className="flex flex-col">
-              <label
-                className="text-lg font-semibold text-gray-700 mb-1 cursor-pointer"
-                htmlFor="images"
-              >
-                Course Images
-                <div className="font-medium p-2 rounded-md border-2 border-gray-400 flex justify-center items-center gap-x-4">
-                  {image === null ? (
-                    <>
-                      <ImageUp size={30} className="text-gray-700" />
-                      <span className="font-sans text-gray-400 text-sm">
-                        Upload Course Image
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="font-sans text-gray-400 text-sm">
-                        {image}
-                      </span>
-                      <SquareCheckBig size={30} className="text-green-700" />
-                    </>
-                  )}
-                </div>
-              </label>
-              <input
-                type="file"
-                className="hidden"
-                name="images"
-                id="images"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          {/* Domain Selection */}
-          <div className="flex flex-col">
-            <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="domain">
+            <label
+              className="text-lg font-semibold text-gray-700 mb-1"
+              htmlFor="domain"
+            >
               Domain
             </label>
             <select
@@ -278,11 +253,18 @@ const CourseUpdateModal = ({ course, onClose }) => {
               <option value="Digital Marketing">Digital Marketing</option>
             </select>
           </div>
+          </div>
 
-          {/* Curriculum and Eligibility */}
+          {/* Domain Selection */}
+        
+
+          {/* Curriculum and eligibilityCriteria */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="curriculum">
+              <label
+                className="text-lg font-semibold text-gray-700 mb-1"
+                htmlFor="curriculum"
+              >
                 Curriculum
               </label>
               <ReactQuill
@@ -292,13 +274,18 @@ const CourseUpdateModal = ({ course, onClose }) => {
               />
             </div>
             <div className="flex flex-col">
-              <label className="text-lg font-semibold text-gray-700 mb-1" htmlFor="eligibility">
-                Eligibility Criteria
+              <label
+                className="text-lg font-semibold text-gray-700 mb-1"
+                htmlFor="eligibilityCriteria"
+              >
+                eligibilityCriteria Criteria
               </label>
               <ReactQuill
                 theme="snow"
-                value={data.eligibility}
-                onChange={(value) => handleQuillChange("eligibility", value)}
+                value={data.eligibilityCriteria}
+                onChange={(value) =>
+                  handleQuillChange("eligibilityCriteria", value)
+                }
               />
             </div>
           </div>

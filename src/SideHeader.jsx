@@ -36,8 +36,8 @@ const navigationItems = [
   { id: '/Registrations', name: 'Registrations', icon: MdAppRegistration },
   { id: '/Notice-Board', name: 'Notice Board', icon: FaChalkboardTeacher },
 
-  { id: '/Enquiries', name: 'Enquiries', icon: SiCoursera },
-  { id: '/Job', name: 'Update for job', icon: MdOutlineUpdate },
+  { id: '/Enquiries', name: 'Inquiries', icon: SiCoursera },
+  { id: '/Job', name: 'Job Board', icon: MdOutlineUpdate },
   { id: '/logout', name: 'logout', icon: IoMdLogOut },
 ];
 

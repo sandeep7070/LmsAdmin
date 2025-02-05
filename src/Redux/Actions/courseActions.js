@@ -73,7 +73,6 @@ export const updateCourse = createAsyncThunk(
         }
       );
       const data = await response.json();
-      console.log('Update ',data)
       if (!response.ok) {
         return rejectWithValue(data);
       }

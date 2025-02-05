@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTestimonials } from "../../Redux/Actions/testimonialAction";
 import Spinner from "../../Components/Spinner/Spinner";
 import TestimonialDeleteModal from "./TestimonialDeleteModal";
-import {Trash2} from 'lucide-react'
+import { Trash2 } from "lucide-react";
 
 const Testimonials = () => {
   const dispatch = useDispatch();
@@ -13,12 +13,11 @@ const Testimonials = () => {
   const [isOpenDleteMOdal, setIsOpenDeleteModal] = useState(false);
   const [testimonialId, setTestimonialId] = useState(null);
 
-
   useEffect(() => {
     dispatch(fetchTestimonials());
   }, []);
 
-  // Handle Delete 
+  // Handle Delete
   const handleDelete = (id) => {
     setTestimonialId(id);
     setIsOpenDeleteModal(true);
@@ -85,44 +84,51 @@ const Testimonials = () => {
             Don't just take our word for it
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial) => (
-            <div
-              key={testimonial._id}
-              className="bg-[#edba121a] rounded-xl shadow-md p-8 relative hover:shadow-lg transition-shadow duration-300"
-            >
-              <Quote className="absolute top-6 right-6 w-8 h-8 text-black" />
+        {status === "loading" ? (
+          <Spinner />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((testimonial) => (
+              <div
+                key={testimonial._id}
+                className="bg-[#edba121a] rounded-xl shadow-md p-8 relative hover:shadow-lg transition-shadow duration-300"
+              >
+                <Quote className="absolute top-6 right-6 w-8 h-8 text-black" />
 
-              <div className="flex items-center mb-6">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div className="ml-4">
-                  <h3 className="font-semibold text-black">
-                    {testimonial.name}
-                  </h3>
-                  <p className="text-sm text-black">{testimonial.role}</p>
+                <div className="flex items-center mb-6">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div className="ml-4">
+                    <h3 className="font-semibold text-black">
+                      {testimonial.name}
+                    </h3>
+                    <p className="text-sm text-black">{testimonial.role}</p>
+                  </div>
                 </div>
+
+                <StarRating rating={testimonial.rating} />
+
+                <p className="mt-4 text-black leading-relaxed">
+                  {testimonial.description}
+                  <Trash2
+                    className="cursor-pointer text-red-500 float-right hover:text-red-400"
+                    onClick={() => handleDelete(testimonial._id)}
+                  />
+                </p>
               </div>
-
-              <StarRating rating={testimonial.rating} />
-
-              <p className="mt-4 text-black leading-relaxed">
-                {testimonial.description}
-              <Trash2 className="cursor-pointer text-red-500 float-right hover:text-red-400" onClick={()=>handleDelete(testimonial._id)}/>
-              </p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
-      {status === "loading" && <Spinner />}
+
       <TestimonialDeleteModal
-       isOpen = {isOpenDleteMOdal}
-       onClose = {()=>setIsOpenDeleteModal(false)}
-       id={testimonialId}
-       />
+        isOpen={isOpenDleteMOdal}
+        onClose={() => setIsOpenDeleteModal(false)}
+        id={testimonialId}
+      />
     </div>
   );
 };

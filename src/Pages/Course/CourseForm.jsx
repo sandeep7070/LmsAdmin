@@ -5,10 +5,13 @@ import { toast } from "sonner";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { addCourse } from "../../Redux/Actions/courseActions";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import Spinner from '../../Components/Spinner/Spinner'
 
 const CourseForm = () => {
   const dispatch = useDispatch();
+  const {status} = useSelector((state)=>state.courses);
+
   const [data, setData] = useState({
     title: "",
     code: "",
@@ -75,6 +78,10 @@ const CourseForm = () => {
       toast.error("Please fill in all fields before submitting.");
       return;
     }
+    if(discountedFees > 500 ){
+      toast.error("Discounted fees cannot be more than 500 of the total fees");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("title", title);
@@ -127,6 +134,9 @@ const CourseForm = () => {
             Go Back
           </Link>
         </div>
+        {
+          status === "loading" && <Spinner/>
+        }
         <form onSubmit={handleSubmit} className="space-y-4">
           <h1 className="text-2xl font-semibold text-center mb-4">
             Add New Course
@@ -244,7 +254,7 @@ const CourseForm = () => {
               <input
                 type="number"
                 className="w-full p-3 rounded-md border-2 outline-none focus:border-yellow-400 border-gray-400"
-                placeholder="Enter discounted fees..."
+                placeholder="Max. 500"
                 name="discountedFees"
                 id="discountedFees"
                 value={data.discountedFees}
@@ -368,7 +378,7 @@ const CourseForm = () => {
               type="submit"
               className="w-36 my-4 p-3 hover:bg-yellow-500 bg-yellow-400 text-white rounded-md text-center"
             >
-              Add
+             {status === "loading" ?"Adding" : "Submit"}
             </button>
           </div>
         </form>
