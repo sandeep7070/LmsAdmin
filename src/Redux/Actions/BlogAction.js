@@ -1,200 +1,71 @@
-import axios from 'axios';
-import {
-    CREATE_BLOG_REQUEST,
-    CREATE_BLOG_SUCCESS,
-    CREATE_BLOG_FAILURE,
-    GET_ALLBLOGCONSTANTS_REQUEST,
-    GET_ALLBLOGCONSTANTS_SUCCESS,
-    GET_ALLBLOGCONSTANTS_FAILURE,
-    GET_BLOGCONSTANTSBYID_REQUEST,
-    GET_BLOGCONSTANTSBYID_SUCCESS,
-    GET_BLOGCONSTANTSBYID_FAILURE,
-    DELETE_BLOG_REQUEST,
-    DELETE_BLOG_SUCCESS,
-    DELETE_BLOG_FAILURE,
-    UPDATE_BLOG_REQUEST,
-    UPDATE_BLOG_SUCCESS,
-    UPDATE_BLOG_FAILURE
-} from '../Constants/BlogConstants.js';
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const BASE_URL = 'https://amsbackendlive.onrender.com/api/v1/blog';
+const BASE_URL = "https://amsbackendlive.onrender.com/api/v1/blog";
 
-const createBlog = (formData) => async (dispatch) => {
-    try {
-        dispatch({ type: CREATE_BLOG_REQUEST });
-
-        if (!(formData instanceof FormData)) {
-            throw new Error('Invalid form data format');
-        }
-
-        const response = await axios.post(`${BASE_URL}/create`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-
-        dispatch({
-            type: CREATE_BLOG_SUCCESS,
-            payload: response.data.data || response.data
-        });
-
-        return {
-            status: 'succeeded',
-            data: response.data
-        };
-    } catch (error) {
-        console.error('Create blog error:', {
-            status: error.response?.status,
-            data: error.response?.data,
-            message: error.message
-        });
-
-        dispatch({
-            type: CREATE_BLOG_FAILURE,
-            payload: error.response?.data?.message || error.message
-        });
-
-        return {
-            status: 'failed',
-            error: error.response?.data?.message || error.message || 'Failed to create blog'
-        };
+export const addBlog = createAsyncThunk("blog/addBlog", async (formData) => {
+  try {
+    const response = await fetch(`${BASE_URL}/Create`, {
+      method: "POST",
+      body: formData, 
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text(); // Read error message
+      throw new Error(`Server Error: ${response.status} - ${errorText}`);
     }
-};
+    
+    const data = await response.json();
+    console.log("Add Response", data.blog);
+    return data.blog;
+    
+  } catch (error) {
+    console.error("Error adding blog : ", error);
+  }
+});
 
-const getAllBlogs = () => async (dispatch) => {
+// Fetch Blogs 
+export const fetchBlogs = createAsyncThunk("blog/fetchBlogs", async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/getAllBlogs`);
+    const data = await response.json();
+    return data.data.blogs;
+  } catch (error) {
+    console.error("Error Fetching blog : ", error);
+  }
+});
+export const deleteBlog = createAsyncThunk(
+  "blog/deleteBlog",
+  async (blogId) => {
     try {
-        dispatch({ type: GET_ALLBLOGCONSTANTS_REQUEST });
-        
-        console.log('Making API request to:', `${BASE_URL}/getAllBlogs`);
-        const response = await axios.get(`${BASE_URL}/getAllBlogs`);
-        console.log('API Response:', response.data);
-        
-        // Add validation and structure logging
-        if (!response.data) {
-            throw new Error('No data received from API');
-        }
-        
-        // Log the structure we're dispatching
-        const payload = {
-            data: response.data
-        };
-          
-        console.log("all data response ", response.data)
-        
-        dispatch({
-            type: GET_ALLBLOGCONSTANTS_SUCCESS,
-            payload: payload
-        });
-
-        return payload;
+      const response = await fetch(`${BASE_URL}/deleteBlog/${blogId}`, {
+        method: "DELETE",
+      });
+      const data = await response.json();
+      return data.blog;
     } catch (error) {
-        console.error('Error details:', {
-            message: error.message,
-            response: error.response?.data,
-            status: error.response?.status
-        });
-        
-        dispatch({
-            type: GET_ALLBLOGCONSTANTS_FAILURE,
-            payload: error.response?.data?.message || error.message
-        });
-        throw error;
+      console.error("Error Deleting blog : ", error);
     }
-};
+  }
+);
 
 
-const getBlogById = (id) => async (dispatch) => {
+
+export const updateBlog = createAsyncThunk(
+  "blog/updateBlog",
+  async ({ blogId, formData }) => {
     try {
-        if (!id) {
-            throw new Error('Blog ID is required');
-        }
-
-        dispatch({ type: GET_BLOGCONSTANTSBYID_REQUEST });
-
-        const response = await axios.get(`${BASE_URL}/getBlogById/${id}`);
-
-        dispatch({
-            type: GET_BLOGCONSTANTSBYID_SUCCESS,
-            payload: {
-                blog: response.data.blog,
-                count: response.data.count
-            }
-        });
-
-        return response.data.blog;
+      const response = await fetch(`${BASE_URL}/updateBlog/${blogId}`, {
+        method: "PUT",
+        headers:{
+           'Content-Type':'application/json'
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      console.log("Update  Response  ", data);
+      return data.blog;
     } catch (error) {
-        dispatch({
-            type: GET_BLOGCONSTANTSBYID_FAILURE,
-            payload: error.response?.data?.message || error.message
-        });
-        throw error;
+      console.error("Error Deleting blog : ", error);
     }
-};
-
-const deleteBlog = (id) => async (dispatch) => {
-    try {
-        if (!id) {
-            throw new Error('Blog ID is required');
-        }
-
-        dispatch({ type: DELETE_BLOG_REQUEST });
-
-        const response = await axios.delete(`${BASE_URL}/deleteBlog/${id}`);
-
-        if (response.data) {
-            dispatch({
-                type: DELETE_BLOG_SUCCESS,
-                payload: id
-            });
-
-            return { success: true };
-        } else {
-            throw new Error('Failed to delete blog');
-        }
-    } catch (error) {
-        dispatch({
-            type: DELETE_BLOG_FAILURE,
-            payload: error.message || 'Failed to delete blog'
-        });
-        throw error;
-    }
-};
-
-const updateBlog = (id, blogData) => async (dispatch) => {
-    try {
-        if (!id) {
-            throw new Error('Blog ID is required');
-        }
-
-        if (!blogData || Object.keys(blogData).length === 0) {
-            throw new Error('Blog data is required');
-        }
-
-        dispatch({ type: UPDATE_BLOG_REQUEST });
-
-        const response = await axios.put(`${BASE_URL}/updateBlog/${id}`, blogData);
-
-        dispatch({
-            type: UPDATE_BLOG_SUCCESS,
-            payload: response.data
-        });
-
-        return response.data;
-    } catch (error) {
-        dispatch({
-            type: UPDATE_BLOG_FAILURE,
-            payload: error.response?.data?.message || error.message
-        });
-        throw error;
-    }
-};
-
-
-
-export {
-    createBlog,
-    getAllBlogs,
-    getBlogById,
-    deleteBlog,
-    updateBlog
-};
+  }
+);

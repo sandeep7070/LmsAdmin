@@ -1,172 +1,143 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Eye, Trash2 } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Eye, Heading1, Pencil, Trash2 } from "lucide-react";
 import { FaBlog } from "react-icons/fa6";
-import BlogPopup from '../Blog/AddPopup';
-import { getAllBlogs, deleteBlog } from '../../Redux/Actions/BlogAction.js';
-import Spinner from '../../Components/Spinner/Spinner.jsx';
+import BlogPopup from "../Blog/AddPopup";
+import Spinner from "../../Components/Spinner/Spinner.jsx";
+import { fetchBlogs } from "../../Redux/Actions/BlogAction.js";
+import { Button } from "@mui/material";
+import BlogDeleteModal from "./BlogDeleteModal.jsx";
+import UpdateBlogModal from "./UpdateBlogModal.jsx";
 
 const BlogManagement = () => {
   const dispatch = useDispatch();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [selectedRows, setSelectedRows] = useState(new Set());
-  const [sortField, setSortField] = useState('createdAt');
-  const [sortDirection, setSortDirection] = useState('desc');
+  const [isDelete, setIsDelete] = useState(false);
+  const [isUpdate,setIsUpdate] = useState(false);
+  const [selectedBlog, setSelectedBlog] = useState(null);
 
-  // Get the blogs state from Redux
-  const blogsState = useSelector(state => state.blog);
+  const { blogs, status, error } = useSelector((state) => state.blogs);
+
+  const handleDelete = (blog) => {
+    setIsDelete(true);
+    setSelectedBlog(blog);
+  };
+
+  const handleEdit = (blog)=>{
+    setIsUpdate(true);
+    setSelectedBlog(blog)
+  }
 
   useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const result = await dispatch(getAllBlogs());
-        console.log('Fetch result:', result);
-      } catch (error) {
-        console.error('Error fetching blogs:', error);
-      }
-    };
-    fetchBlogs();
+    dispatch(fetchBlogs());
   }, [dispatch]);
 
-  // Process the blogs data correctly
-  const processedData = useMemo(() => {
-    // Check if we have the blogs data in the correct structure
-    const blogsData = blogsState?.blogs?.data?.blogs || [];
-    
-     console.log("blogsData", blogsData )
-    return blogsData.map(blog => ({
-      id: blog._id,
-      category: blog.category || 'Uncategorized',
-      content: blog.content || 'No content',
-      createdAt: blog.createdAt || new Date().toISOString(),
-      description: blog.description || 'No description',
-      name: blog.name || 'Untitled',
-      status: blog.status || 'Draft',
-      title: blog.title || 'Untitled'
-    }));
-  }, [blogsState?.blogs?.data?.blogs]);
-
-  const sortedData = useMemo(() => {
-    return [...processedData].sort((a, b) => {
-      const aValue = a[sortField];
-      const bValue = b[sortField];
-      
-      if (sortDirection === 'asc') {
-        return aValue > bValue ? 1 : -1;
-      }
-      return aValue < bValue ? 1 : -1;
-    });
-  }, [processedData, sortField, sortDirection]);
-
-  const handleSort = (field) => {
-    if (sortField === field) {
-      setSortDirection(current => current === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(field);
-      setSortDirection('asc');
-    }
-  };
-
-  const handleRowSelection = (id) => {
-    setSelectedRows(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
-      }
-      return newSet;
-    });
-  };
-
-  const handleDeleteSelected = async () => {
-    try {
-      for (const id of selectedRows) {
-        await dispatch(deleteBlog(id));
-      }
-      setSelectedRows(new Set());
-      dispatch(getAllBlogs()); // Refresh the list
-    } catch (error) {
-      console.error('Error deleting blogs:', error);
-    }
-  };
-
-  // Rest of your component remains the same...
   return (
-    <div className="w-full bg-white rounded-lg shadow-md">
-      {/* Header section */}
-      <div className="p-4 border-b border-gray-200">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <FaBlog className="text-3xl ml-6 text-yellow-600" />
-            <h2 className="text-2xl gap-2 font-semibold text-gray-900">
-              Content Blog Management
-              {blogsState?.blogs?.data?.totalBlogs && (
-                <span className="text-sm text-gray-500 ml-2">
-                  (Total: {blogsState.blogs.data.totalBlogs})
-                </span>
-              )}
-            </h2>
-          </div>
-          {/* Buttons */}
-          <div className="flex gap-4">
-            <button 
-              onClick={() => setIsPopupOpen(true)}
-              className="flex items-center px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
-              disabled={blogsState.loading}
-            >
-              Add Blog
-            </button>
-            {selectedRows.size > 0 && (
-              <button 
-                onClick={handleDeleteSelected}
-                className="flex items-center px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                disabled={blogsState.loading}
-              >
-                <Trash2 className="w-4 h-4 mr-2" />
-                Delete Selected ({selectedRows.size})
-              </button>
+    <div className="w-full bg-white rounded-lg shadow-md p-6">
+      {/* Header Section */}
+      <div className="flex justify-between items-center border-b pb-4 mb-4">
+        <div className="flex items-center gap-2">
+          <FaBlog className="text-3xl text-yellow-600" />
+          <h2 className="text-2xl font-semibold text-gray-900">
+            Content Blog Management
+            {blogs.length > 0 && (
+              <span className="text-sm text-gray-500 ml-2">
+                (Total: {blogs.length})
+              </span>
             )}
-          </div>
+          </h2>
         </div>
+        <Button
+          variant="contained"
+          color="warning"
+          onClick={() => setIsPopupOpen(true)}
+          disabled={status === "loading"}
+        >
+          Add Blog
+        </Button>
       </div>
 
-      {/* Table section */}
-      {blogsState.loading ? (
-        <Spinner/>
-      ) : blogsState.error ? (
-        <div className="w-full p-4 bg-red-50 border border-red-200 rounded-lg">
-          <div className="text-red-600">{blogsState.error}</div>
+      {/* Content Section */}
+      {status === "loading" ? (
+        <Spinner />
+      ) : error ? (
+        <div className="w-full p-4 bg-red-50 border border-red-200 rounded-lg text-red-600">
+          {error}
         </div>
       ) : (
-        <>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              {/* Table header and body implementation remains the same */}
-              {/* ... */}
-            </table>
-          </div>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-gray-300 text-left">
+            <thead className="bg-gray-100 text-gray-700 uppercase text-sm">
+              <tr>
+                <th className="p-4 border">S.No</th>
+                <th className="p-4 border">Title</th>
+                <th className="p-4 border">Category</th>
+                <th className="p-4 border">Description</th>
+                <th className="p-4 border">Content</th>
+                <th className="p-4 border text-center">Actions</th>
+              </tr>
+            </thead>
+           {blogs.length === 0 ? <tbody className="text-center">
+            <td className="text-2xl font-semibold p-6" colSpan={6}>
+            No Blogs Found ....
+            </td>
+            </tbody> : (
+               <tbody>
+               {blogs &&
+                 blogs.map((blog, index) => (
+                   <tr key={blog._id} className="border hover:bg-gray-50">
+                     <td className="p-4 border">{index + 1}</td>
+                     <td className="p-4 border font-medium">{blog.title}</td>
+                     <td className="p-4 border text-gray-600">
+                       {blog.category}
+                     </td>
+                     <td className="p-4 border text-gray-600">
+                       {blog.description}
+                     </td>
+                     <td className="p-4 border text-gray-600">
+                       <div
+                         className="ql-editor"
+                         dangerouslySetInnerHTML={{ __html: blog.content }}
+                       ></div>
+                     </td>
+ 
+                     <td className="p-4 border text-center">
+                       <Button variant="text" size="small" className="mr-2" onClick={()=>handleEdit(blog)}>
+                         <Pencil className="h-4 w-4" />
+                       </Button>
+                       <Button
+                         variant="text"
+                         size="small"
+                         className="text-red-600 hover:text-red-700"
+                         onClick={() => handleDelete(blog)}
+                       >
+                         <Trash2 className="h-4 w-4" />
+                       </Button>
+                     </td>
+                   </tr>
+                 ))}
+             </tbody>
+           )}
+         
 
-          {/* Footer section */}
-          <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
-            <div className="flex justify-between items-center">
-              <div className="text-sm text-gray-700">
-                Page {blogsState?.blogs?.data?.currentPage || 1} of {blogsState?.blogs?.data?.totalPages || 1} • 
-                Showing {sortedData.length} of {blogsState?.blogs?.data?.totalBlogs || 0} entries
-              </div>
-              {selectedRows.size > 0 && (
-                <div className="text-sm text-gray-700">
-                  {selectedRows.size} {selectedRows.size === 1 ? 'item' : 'items'} selected
-                </div>
-              )}
-            </div>
-          </div>
-        </>
+          </table>
+          <BlogDeleteModal
+            isOpen={isDelete}
+            onClose={() => setIsDelete(false)}
+            blog={selectedBlog}
+          />
+          <UpdateBlogModal
+          isOpen={isUpdate}
+          onClose={() => setIsUpdate(false)}
+          blogData={selectedBlog}
+          />
+        </div>
       )}
 
-      <BlogPopup 
+      <BlogPopup
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
+        blog={selectedBlog}
       />
     </div>
   );

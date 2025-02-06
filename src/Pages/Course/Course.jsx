@@ -92,7 +92,7 @@ const CourseList = () => {
                   <th className="p-4 w-16 font-semibold">Co. Code</th>
                   <th className="p-4 w-48 font-semibold">Title</th>
                   <th className="p-4 font-semibold">Price</th>
-                  <th className="p-4 font-semibold">Min. Pay</th>
+                  <th className="p-4 font-semibold">Registration Fees</th>
                   <th className="p-4 font-semibold">Duration</th>
                   <th className="p-4 w-32 font-semibold">Domain</th>
                   <th className="p-4 w-32 font-semibold">Update</th>
