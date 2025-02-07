@@ -54,7 +54,7 @@ const ExpenseForm = () => {
       </select>
       
       <label htmlFor='amount' className="block my-4 font-medium text-gray-700 mt-3">Enter Amount </label>
-      <input type="number" id="amount" name="amount" value={formData.amount} onChange={handleChange}   
+      <input type="number" placeholder='Enter Amount...' id="amount" name="amount" value={formData.amount} onChange={handleChange}   
       className="w-full p-4 border-2 border-gray-500 rounded-md outline-none focus:border-yellow-400" />
       
       <label className="block my-4 font-medium text-gray-700 mt-3">Payment Method</label>

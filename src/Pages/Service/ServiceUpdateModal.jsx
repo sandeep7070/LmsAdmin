@@ -9,7 +9,6 @@ import Spinner from "../../Components/Spinner/Spinner";
 const ServiceUpdateModal = ({ isOpen, onClose, service }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
   const dispatch = useDispatch();
   const {status} = useSelector((state)=>state.services);
 
@@ -18,7 +17,6 @@ const ServiceUpdateModal = ({ isOpen, onClose, service }) => {
     if (service) {
       setTitle(service.title || "");
       setDescription(service.description || "");
-      setImage(null); // Reset the image field when modal is opened
     }
   }, [service]);
 
@@ -88,18 +86,6 @@ const ServiceUpdateModal = ({ isOpen, onClose, service }) => {
               onChange={(e) => setDescription(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#edba12] transition-all"
               placeholder="Enter service description..."
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="image" className="block text-sm font-medium text-gray-700">
-              Service Image
-            </label>
-            <input
-              id="image"
-              type="file"
-              onChange={handleImageChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#edba12] transition-all"
             />
           </div>
         </div>

@@ -18,7 +18,8 @@ import {
   ChevronRight, 
   ChevronLeft,
   LayoutDashboard,
-  HandCoins
+  HandCoins,
+  TriangleAlert
   
 } from 'lucide-react';
 
@@ -36,7 +37,7 @@ const navigationItems = [
   { id: '/Registrations', name: 'Registrations', icon: MdAppRegistration },
   { id: '/Notice-Board', name: 'Notice Board', icon: FaChalkboardTeacher },
 
-  { id: '/Enquiries', name: 'Inquiries', icon: SiCoursera },
+  { id: '/Enquiries', name: 'Inquiries', icon: TriangleAlert },
   { id: '/Job', name: 'Job Board', icon: MdOutlineUpdate },
   { id: '/logout', name: 'logout', icon: IoMdLogOut },
 ];

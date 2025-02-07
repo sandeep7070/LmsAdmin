@@ -77,7 +77,7 @@ const CourseList = () => {
             </div>
             <Link
               to="/Course/form"
-              className="bg-yellow-400 px-4 py-2 rounded-full text-white font-semibold"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
               Add new Course
             </Link>

@@ -29,7 +29,7 @@ const UpdateJob = () => {
           <p className="text-lg text-gray-600">Expand your skills</p>
           <Link
             to="/Job/form"
-            className="float-right bg-yellow-400 px-4 py-2 rounded-full text-white font-semibold"
+             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 float-right"
           >
             Add new Job
           </Link>

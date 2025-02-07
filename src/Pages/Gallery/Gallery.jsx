@@ -4,7 +4,7 @@ import { fetchAllGallery } from "../../Redux/Actions/galleryAction";
 import Spinner from "../../Components/Spinner/Spinner";
 import GalleryAddModal from "./GalleryAddModal";
 import GalleryDeleteModal from "./GalleryDeleteModal";
-
+import {Images} from 'lucide-react'
 const Gallery = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -30,12 +30,12 @@ const Gallery = () => {
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Gallery</h1>
+        <h1 className="text-3xl font-bold flex items-center gap-x-4"> <Images/> <span>Gallery</span></h1>
         <button
           onClick={() => setIsModalOpen(true)}
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
-          Add New Gallery
+          Add New Image
         </button>
       </div>
 

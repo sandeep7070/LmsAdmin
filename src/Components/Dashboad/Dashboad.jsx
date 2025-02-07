@@ -19,6 +19,7 @@ import { GrUpdate } from "react-icons/gr";
 import { GrUserAdmin } from "react-icons/gr";
 import { useDispatch,useSelector } from 'react-redux';
 import { fetchExpenses } from '../../Redux/Actions/expenseActions';
+import { Link } from 'react-router-dom';
 const salesData = [
   { name: 'Jan', value: 4000 },
   { name: 'Feb', value: 3000 },
@@ -59,12 +60,12 @@ const AdminDashboard = () => {
                 <Search className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" />
               </div>
               {/* Notification */}
-              <button className="p-2 rounded-lg hover:bg-gray-100 relative">
+              <Link to='/Notice-Board' className="p-2 rounded-lg hover:bg-gray-100 relative">
                 <Bell className="w-6 h-6 text-gray-600" />
                 <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">
-                  3
+                  4
                 </span>
-              </button>
+              </Link>
               {/* Profile */}
               
             </div>
@@ -82,7 +83,7 @@ const AdminDashboard = () => {
                 <RiTeamLine className="w-8 h-11 text-gray-200" />
               </div>
               <div className="ml-4">
-                <h2 className="text-lg font-semibold text-white">Team(Protiles)</h2>
+                <h2 className="text-lg font-semibold text-white">Team(Profiles)</h2>
                 <p className="text-sm text-black">+2.5% from last month</p>
               </div>
             </div>

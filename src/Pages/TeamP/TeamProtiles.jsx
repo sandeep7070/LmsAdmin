@@ -134,7 +134,7 @@ function TeamMemberList() {
         </div>
         <button 
           onClick={() => setPopupOpen(true)}
-          className="px-4 py-2 mr-7  bg-gradient-to-r  from-yellow-400  to-yellow-600 text-white rounded-lg hover:bg-yellow-500 transition-colors"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
           Add Team
         </button>

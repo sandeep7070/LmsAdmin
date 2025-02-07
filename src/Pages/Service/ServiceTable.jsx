@@ -7,6 +7,7 @@ import ServiceDeleteModal from "./ServiceDeleteModal";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchServices } from "../../Redux/Actions/serviceActions";
 import Spinner from "../../Components/Spinner/Spinner";
+import ServiceInfoModal from "./ServiceInfoModal";
 
 const ServiceTable = () => {
   const dispatch = useDispatch();
@@ -20,11 +21,9 @@ const ServiceTable = () => {
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false); // For update modal
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // For delete modal
+  const [isInfoModalOpen,setIsInfoModalOpen] = useState(false)
   const [selectedService, setSelectedService] = useState(null); // Currently selected service for update/delete
 
-  const handleView = (id) => {
-    console.log(`View service with ID: ${id}`);
-  };
 
   const handleEdit = (service) => {
     setSelectedService(service);
@@ -34,6 +33,10 @@ const ServiceTable = () => {
   const handleDelete = (id) => {
     setSelectedService(id);
     setIsDeleteModalOpen(true);
+  };
+  const handleView = (service) => {
+    setSelectedService(service);
+    setIsInfoModalOpen(true);
   };
 
   return (
@@ -45,7 +48,7 @@ const ServiceTable = () => {
         </h2>
         <Link
           to="/Service/form"
-          className="border bg-yellow-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-yellow-400"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
           Add Service
         </Link>
@@ -70,14 +73,14 @@ const ServiceTable = () => {
               <tbody>
                 {services.map((service, index) => (
                   <tr key={service._id} className="border-b hover:bg-gray-50">
-                    <td className="p-4">{index + 1}</td>
+                    <td className="p-4">{index + 1}.</td>
                     <td className="p-4 font-medium">{service.title}</td>
                     <td className="p-4 text-gray-600">{service.description}</td>
                     <td className="p-4">
                       <Button
                         variant="text"
                         size="small"
-                        onClick={() => handleView(service._id)}
+                        onClick={() => handleView(service)}
                         className="h-8 w-8 p-0"
                       >
                         <Eye className="h-4 w-4" />
@@ -123,6 +126,12 @@ const ServiceTable = () => {
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         id={selectedService}
+      />
+      {/* Info Service Modal */}
+      <ServiceInfoModal
+        isOpen={isInfoModalOpen}
+        onClose={() => setIsInfoModalOpen(false)}
+        service={selectedService}
       />
     </div>
   );

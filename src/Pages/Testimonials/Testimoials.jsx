@@ -76,9 +76,9 @@ const Testimonials = () => {
           </h2>
           <Link
             to="/Testimonials/form"
-            className="px-5 py-4 rounded-full float-right bg-yellow-400 text-white font-semibold hover:bg-yellow-500"
+           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 float-right"
           >
-            Add New Testimonial{" "}
+            Add  Testimonial{" "}
           </Link>
           <p className="text-lg text-black max-w-2xl mx-auto">
             Don't just take our word for it
