@@ -18,6 +18,7 @@ import AdminDashboard from './Components/Staff ManagerDasboad/AdminDashboad';
 import Expense from './Pages/Expense/Expense';
 import ExpenseForm from './Pages/Expense/ExpenseForm';
 import JobForm from './Pages/Update-of-Job/JobForm';
+import Gallery from './Pages/Gallery/Gallery';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <Route path='/Notice-Board' element={<NoticeBoad/>} /> 
             <Route path="/Job" element={<UpdateJob />} />  
             <Route path="/Job/form" element={<JobForm />} />  
+            <Route path="/Gallery" element={<Gallery />} />  
           </Routes>
         </div>
         <Toaster richColors position="top-center" />
