@@ -10,7 +10,7 @@ const ServiceInfoModal = ({ isOpen, onClose, service }) => {
       <DialogContent>
         <div className="p-4">
           {service.coverImage && (
-            <img src={service.coverImage} alt={service.title} className="w-full h-40 object-cover rounded mb-4" />
+            <img src={service.coverImage} alt={service.title} className="w-full h-96 object-cover rounded mb-4" />
           )}
           <h2 className="text-xl ">Title : <span className="font-semibold">{service.title}</span></h2>
           <p className="text-gray-700 mt-2">Description : <span className="font-semibold">{service.description}</span></p>

@@ -19,7 +19,8 @@ import {
   ChevronLeft,
   LayoutDashboard,
   HandCoins,
-  TriangleAlert
+  TriangleAlert,
+  Info
   
 } from 'lucide-react';
 
@@ -28,7 +29,7 @@ const navigationItems = [
   { id: '/StaffManeger', name: 'Staff Manager Dashboard', icon: RiAdminFill },
   { id: '/Service', name: 'Service Management', icon: MdMiscellaneousServices  },  
   { id: '/Team', name: 'Team(Profiles)', icon: AiOutlineTeam  },
-  { id: '/About', name: 'About Company', icon: FcAbout  },
+  { id: '/About', name: 'About Company', icon: Info  },
   { id: '/Course', name: 'Course', icon: SiCoursera },
   { id: '/expense', name: 'Expense', icon: HandCoins },
   { id: '/Gallery', name: 'Gallery', icon: GrGallery },
@@ -37,7 +38,7 @@ const navigationItems = [
   { id: '/Registrations', name: 'Registrations', icon: MdAppRegistration },
   { id: '/Notice-Board', name: 'Notice Board', icon: FaChalkboardTeacher },
 
-  { id: '/Enquiries', name: 'Inquiries', icon: TriangleAlert },
+  { id: '/Inquiries', name: 'Inquiries', icon: TriangleAlert },
   { id: '/Job', name: 'Job Board', icon: MdOutlineUpdate },
   { id: '/logout', name: 'logout', icon: IoMdLogOut },
 ];
@@ -63,14 +64,14 @@ const SideLayout = () => {
       rounded-tr-3xl rounded-br-3xl
       ${isSidebarCollapsed ? 'w-36' : 'w-72'}
     `}>        
-      <div className="flex justify-center items-center ">
+      <div className="flex justify-center items-center p-4 ">
         <img 
           className={`
             transition-all duration-300
             ${isSidebarCollapsed ? 'w-16 h-14' : 'w-26 h-20'}
             object-contain
           `} 
-          src="ansh4.jpg" 
+          src="https://th.bing.com/th/id/R.1a551aa4cba59342dff2decfbaa9c8dd?rik=KQTDhx1ZUAAfjA&riu=http%3a%2f%2fpluspng.com%2fimg-png%2flogo-template-png-logo-templates-1655.png&ehk=9MRokJPqMM6lr6AsMn50qqBGQgGuPYXFuTzMFbKjOa8%3d&risl=&pid=ImgRaw&r=0" 
           alt="Logo" 
         />
       </div>
