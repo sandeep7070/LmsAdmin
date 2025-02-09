@@ -21,38 +21,44 @@ import JobForm from './Pages/Update-of-Job/JobForm';
 import Gallery from './Pages/Gallery/Gallery';
 import Inquiries from './Pages/Inquiries/Inquiries';
 import CompanyProfileForm from './Pages/AboutCompany/CompanyProfileForm';
+import AdminLogin from './Components/AdminAuthentication/AdminLogin';
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex">
-        <SideLayout /> 
-        <div className="flex-1">
-          <Routes>
-            <Route path="/" element={<Dashboadsh />} />
-            <Route path= "/StaffManeger" element={<AdminDashboard/>} />
-            <Route path="/Service" element={<ServiceTable />} />
-            <Route path='/Service/form' element={<ServiceForm />} />
-            <Route path="/Team" element={<SimpleTable />} />
-            <Route path="/About" element={<AboutCompany />} />
-            <Route path="/About/form" element={<CompanyProfileForm />} />
-            <Route path="/Course" element={<CourseList />} />
-            <Route path="/Course/form" element={<CourseForm />} />
-            <Route path = "/Expense" element={<Expense/>} />
-            <Route path = "/Expense/form" element={<ExpenseForm/>} />
-            <Route path="/Blog" element={<StyledTable />} />
-            <Route path="/Testimonials" element={<Testimonials />} />
-            <Route path="/Testimonials/form" element={<TestimonialForm />} />
-            <Route path="/Registrations" element={<RegistrationForm />} />
-            <Route path='/Notice-Board' element={<NoticeBoad/>} /> 
-            <Route path="/Job" element={<UpdateJob />} />  
-            <Route path="/Job/form" element={<JobForm />} />  
-            <Route path="/Gallery" element={<Gallery />} />  
-            <Route path="/Inquiries" element={<Inquiries />} />  
-          </Routes>
-        </div>
-        <Toaster richColors position="top-center" />
-      </div>
+      <Routes>
+        <Route path="/login" element={<AdminLogin />} />  
+        <Route path="/*" element={
+          <div className="flex">
+            <SideLayout /> 
+            <div className="flex-1">
+              <Routes>
+                <Route path="/" element={<Dashboadsh />} />
+                <Route path= "/StaffManeger" element={<AdminDashboard/>} />
+                <Route path="/Service" element={<ServiceTable />} />
+                <Route path='/Service/form' element={<ServiceForm />} />
+                <Route path="/Team" element={<SimpleTable />} />
+                <Route path="/About" element={<AboutCompany />} />
+                <Route path="/About/form" element={<CompanyProfileForm />} />
+                <Route path="/Course" element={<CourseList />} />
+                <Route path="/Course/form" element={<CourseForm />} />
+                <Route path = "/Expense" element={<Expense/>} />
+                <Route path = "/Expense/form" element={<ExpenseForm/>} />
+                <Route path="/Blog" element={<StyledTable />} />
+                <Route path="/Testimonials" element={<Testimonials />} />
+                <Route path="/Testimonials/form" element={<TestimonialForm />} />
+                <Route path="/Registrations" element={<RegistrationForm />} />
+                <Route path='/Notice-Board' element={<NoticeBoad/>} /> 
+                <Route path="/Job" element={<UpdateJob />} />  
+                <Route path="/Job/form" element={<JobForm />} />  
+                <Route path="/Gallery" element={<Gallery />} />  
+                <Route path="/Inquiries" element={<Inquiries />} />  
+              </Routes>
+            </div>
+            <Toaster richColors position="top-center" />
+          </div>
+        } />
+      </Routes>
     </BrowserRouter>
   );
 }
