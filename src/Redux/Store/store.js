@@ -7,6 +7,7 @@ import expenseReducer from "../Reducers/expenseReducers";
 import jobReducer from "../Reducers/jobReducers";
 import blogReducer from "../Reducers/BlogReducer";
 import galleryReducer from '../Reducers/galleryReducer'
+import authReducer from '../Reducers/authReducer'
 
 const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
     expenses: expenseReducer,
     jobs: jobReducer,
     blogs: blogReducer,
-    gallery:galleryReducer
+    gallery:galleryReducer,
+    auth:authReducer
   },
 });
 

@@ -27,9 +27,9 @@ const AdminDashboard = () => {
   const { teamMembers, status: teamStatus } = useSelector((state) => state.team);
 
   useEffect(() => {
-    if (!expenses.length) dispatch(fetchExpenses()); // Fetch only if data is empty
-    if (!teamMembers.length) dispatch(getAllTeamMembers());
-  }, [dispatch, expenses.length, teamMembers.length]);
+    if (!expenses?.length) dispatch(fetchExpenses()); 
+    if (!teamMembers?.length) dispatch(getAllTeamMembers());
+  }, [dispatch, expenses?.length, teamMembers?.length]);
  
 
   // Predefined months (Jan–Dec)
@@ -91,17 +91,17 @@ const AdminDashboard = () => {
         {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           {[
-            { icon: <RiTeamLine className="w-8 h-11 text-gray-200" />, title: 'Team (Profiles)', change: teamMembers?.length },
-            { icon: <SiCoursera className="w-8 h-11 text-gray-200" />, title: 'Course', change: '+5.2%' },
-            { icon: <FaBlog className="w-8 h-11 text-gray-200" />, title: 'Blog', change: '+8.1%' },
-            { icon: <GrUpdate className="w-6 h-11 text-white" />, title: 'Update Job', change: '-1.2%' }
+            { icon: <RiTeamLine className="w-8 h-11 text-gray-200" />, title: 'Team (Profiles)', change: teamMembers?.length , message:"Team members" },
+            { icon: <SiCoursera className="w-8 h-11 text-gray-200" />, title: 'Course', change: '5', message : ' Courses Available ' },
+            { icon: <FaBlog className="w-8 h-11 text-gray-200" />, title: 'Blog', change: '8'  , message : ' Blog Posts ' },
+            { icon: <GrUpdate className="w-6 h-11 text-white" />, title: 'Update Job', change: '3', message:'Available Jobs' },
           ].map((stat, index) => (
             <div key={index} className="rounded-lg shadow p-6 bg-gradient-to-r from-[#edba12] to-yellow-600">
               <div className="flex items-center">
                 <div className="p-3 rounded-full">{stat.icon}</div>
                 <div className="ml-4">
                   <h2 className="text-lg font-semibold text-white">{stat.title}</h2>
-                  <p className="text-sm text-black">{stat.change}</p>
+                  <p className="text-sm text-black">{stat.change} {stat.message}</p>
                 </div>
               </div>
             </div>
